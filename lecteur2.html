@@ -5,7 +5,7 @@
 <style>
   body {
     margin: 0;
-    padding: 42px 26px 24px 26px;
+    padding: 68px 26px 35px 26px; /* Plus d'espace en haut et en bas pour voir les chibis en entier */
     background: transparent;
     font-family: 'Segoe UI', sans-serif;
     overflow: hidden;
@@ -103,7 +103,7 @@
     height: 40px;
     z-index: 10;
     pointer-events: none;
-    offset-path: inset(-34px -16px -16px -16px round 50px);
+    offset-path: inset(-32px -16px -16px -16px round 50px);
     offset-rotate: auto;
     animation: patrol 16s linear infinite;
   }
@@ -143,27 +143,17 @@
   <!-- CHIBI EIKO (Cheveux noirs, casque néon bleu, cristal bleu) -->
   <svg class="walker" viewBox="0 0 34 40">
     <g class="body-bob">
-      <!-- Cheveux noirs arrière flottants -->
       <path d="M12 10 Q6 18 8 28 Q13 26 15 28 Q17 20 16 10 Z" fill="#0f0c1d" stroke="#38bdf8" stroke-width="0.6"/>
-      <!-- Jambe arrière -->
       <line class="leg-r" x1="17" y1="26" x2="17" y2="35" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
-      <!-- Robe / Tenue noire -->
       <path d="M13 17 L21 17 L23 27 L11 27 Z" fill="#090910" stroke="#38bdf8" stroke-width="0.8"/>
-      <!-- Pendentif Cristal Bleu -->
       <polygon points="18,19 20,21.5 18,24 16,21.5" fill="#38bdf8"/>
-      <!-- Tête chibi -->
       <circle cx="17" cy="11" r="6.5" fill="#fde6d8"/>
-      <!-- Frange cheveux noirs -->
       <path d="M10.5 11 C10.5 5, 23.5 5, 23.5 11 C21 8, 18 9, 17 11 C15 9, 12 8, 10.5 11 Z" fill="#0f0c1d"/>
-      <!-- Oeil fermé paisible -->
       <path d="M19 11.5 Q20.5 12.5 22 11.5" fill="none" stroke="#0f0c1d" stroke-width="1.1" stroke-linecap="round"/>
-      <!-- Casque Audio Néon Bleu -->
       <path d="M11 10 A6.5 6.5 0 0 1 23 10" fill="none" stroke="#1e293b" stroke-width="2"/>
       <circle cx="16.5" cy="11" r="2.8" fill="#0f172a" stroke="#38bdf8" stroke-width="1.2"/>
       <circle cx="16.5" cy="11" r="1" fill="#38bdf8"/>
-      <!-- Jambe avant -->
       <line class="leg-l" x1="17" y1="26" x2="17" y2="35" stroke="#334155" stroke-width="3" stroke-linecap="round"/>
-      <!-- Bras -->
       <line class="arm-l" x1="17" y1="18" x2="17" y2="24" stroke="#fde6d8" stroke-width="2.2" stroke-linecap="round"/>
     </g>
   </svg>
@@ -171,26 +161,17 @@
   <!-- CHIBI CAROL (Cheveux châtains tressés, tenue noire/or, casque doré) -->
   <svg class="walker walker-carol" viewBox="0 0 34 40">
     <g class="body-bob">
-      <!-- Cheveux châtains arrière -->
       <path d="M12 10 Q5 18 7 29 Q13 27 16 28 Q17 20 16 10 Z" fill="#9a6338" stroke="#f59e0b" stroke-width="0.6"/>
-      <!-- Jambe arrière -->
       <line class="leg-r" x1="17" y1="26" x2="17" y2="35" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
-      <!-- Robe noire et dorée -->
       <path d="M13 17 L21 17 L23 27 L11 27 Z" fill="#18121e" stroke="#f59e0b" stroke-width="0.9"/>
-      <!-- Tête chibi -->
       <circle cx="17" cy="11" r="6.5" fill="#fde6d8"/>
-      <!-- Frange cheveux châtains -->
       <path d="M10.5 11 C10.5 5, 23.5 5, 23.5 11 C21 8, 18 9, 17 11 C15 9, 12 8, 10.5 11 Z" fill="#855129"/>
-      <!-- Grand sourire joyeux -->
       <path d="M19 10.5 Q20.5 9.2 22 10.5" fill="none" stroke="#451a03" stroke-width="1.1" stroke-linecap="round"/>
       <path d="M19.5 13 Q20.8 14.8 22 13 Z" fill="#f43f5e"/>
-      <!-- Casque Audio Doré -->
       <path d="M11 10 A6.5 6.5 0 0 1 23 10" fill="none" stroke="#292524" stroke-width="2"/>
       <circle cx="16.5" cy="11" r="2.8" fill="#1c1917" stroke="#fbbf24" stroke-width="1.2"/>
       <circle cx="16.5" cy="11" r="1" fill="#fbbf24"/>
-      <!-- Jambe avant -->
       <line class="leg-l" x1="17" y1="26" x2="17" y2="35" stroke="#334155" stroke-width="3" stroke-linecap="round"/>
-      <!-- Bras -->
       <line class="arm-l" x1="17" y1="18" x2="17" y2="24" stroke="#fde6d8" stroke-width="2.2" stroke-linecap="round"/>
     </g>
   </svg>
