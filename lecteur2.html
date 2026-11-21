@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<style>
+  body { margin: 0; padding: 6px; background: transparent; font-family: 'Segoe UI', sans-serif; }
+  .mini-bar { display: flex; align-items: center; gap: 12px; background: linear-gradient(90deg, #0b0b14 0%, #1a102e 50%, #0d1b2a 100%); border: 1px solid #8b5cf6; box-shadow: 0 0 12px rgba(139, 92, 246, 0.4); border-radius: 50px; padding: 6px 16px; max-width: 650px; margin: auto; }
+  .track-info { display: flex; align-items: center; gap: 8px; white-space: nowrap; color: #38bdf8; font-size: 13px; font-weight: bold; text-shadow: 0 0 8px rgba(56, 189, 248, 0.5); }
+  .loop-tag { font-size: 11px; color: #c084fc; background: rgba(168, 85, 247, 0.15); padding: 2px 7px; border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.4); }
+  audio { flex: 1; height: 30px; filter: invert(90%) hue-rotate(180deg); outline: none; }
+</style>
+</head>
+<body>
+<div class="mini-bar">
+  <div class="track-info">
+    <span>Elsewhere</span>
+    <span class="loop-tag">🔁 Boucle</span>
+  </div>
+  <audio controls loop>
+    <source src="episode2.mp3.mp3" type="audio/mpeg">
+  </audio>
+</div>
+</body>
+</html>
