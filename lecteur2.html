@@ -1,35 +1,80 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><style>
-body{margin:0;padding:88px 42px 58px;background:transparent;font-family:'Segoe UI',sans-serif;overflow:hidden}
-.stage{position:relative;max-width:600px;margin:auto}
-.neon{position:relative;border-radius:50px;padding:3px;overflow:hidden;box-shadow:0 0 22px rgba(139,92,246,.55),0 0 40px rgba(56,189,248,.3)}
-.neon::before{content:"";position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(transparent,#a855f7,#38bdf8,transparent 40%,transparent 50%,#f59e0b,#38bdf8,transparent 90%);animation:rot 4s linear infinite;z-index:0}
-.neon.play::before{animation-duration:1.8s}@keyframes rot{100%{transform:rotate(360deg)}}
-.bar{position:relative;z-index:1;display:flex;align-items:center;gap:12px;background:linear-gradient(90deg,#090910,#150e24 50%,#0a1420);border-radius:47px;padding:6px 16px}
-.info{display:flex;align-items:center;gap:8px;white-space:nowrap;color:#38bdf8;font-size:13px;font-weight:bold;text-shadow:0 0 8px rgba(56,189,248,.7)}
-.btn{font-size:11px;color:#38bdf8;background:rgba(56,189,248,.15);padding:3px 9px;border-radius:12px;border:1px solid #38bdf8;cursor:pointer;font-weight:bold}
-.btn.off{color:#94a3b8;background:rgba(148,163,184,.1);border-color:#475569;font-weight:normal}
-audio{flex:1;height:30px;filter:invert(90%) hue-rotate(180deg);outline:none}
-.w{position:absolute;width:46px;height:52px;z-index:10;pointer-events:none;offset-path:inset(-24px -26px -24px -26px round 60px);offset-rotate:auto;offset-anchor:50% 92%;animation:walk 24s linear infinite}
-.w1{animation-delay:0s}.w2{animation-delay:-6s}.w3{animation-delay:-12s}.w4{animation-delay:-18s}
-.play .w{animation-duration:14s}.play .w1{animation-delay:0s}.play .w2{animation-delay:-3.5s}.play .w3{animation-delay:-7s}.play .w4{animation-delay:-10.5s}
-@keyframes walk{100%{offset-distance:100%}}
-.ll{transform-origin:23px 35px;animation:sw .45s ease-in-out infinite alternate}
-.lr{transform-origin:23px 35px;animation:sw .45s ease-in-out infinite alternate-reverse}
-.al{transform-origin:23px 24px;animation:sw .45s ease-in-out infinite alternate-reverse}
-.hf{transform-origin:20px 14px;animation:hw .6s ease-in-out infinite alternate}
-.bb{animation:bob .225s ease-in-out infinite alternate}
-@keyframes sw{from{transform:rotate(-22deg)}to{transform:rotate(22deg)}}
-@keyframes hw{from{transform:rotate(-4deg)}to{transform:rotate(5deg)}}
-@keyframes bob{from{transform:translateY(0)}to{transform:translateY(-2.5px)}}
-</style></head><body><div class="stage" id="st">
-<svg class="w w1" viewBox="0 0 46 52"><g class="bb"><path class="hf" d="M16 12Q6 22 9 39Q14 36 17 40Q20 36 22 39Q24 24 22 12Z" fill="#0b0914" stroke="#38bdf8" stroke-width=".6"/><g class="lr"><line x1="23" y1="35" x2="23" y2="45" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"/><path d="M21 45H26V47H21Z" fill="#090910" stroke="#38bdf8" stroke-width=".7"/></g><path d="M17 23H29L32 37H14Z" fill="#0d0a18" stroke="#f59e0b" stroke-width=".7"/><path d="M15 34H31" stroke="#a855f7" stroke-width="1.2"/><polygon points="25,25 27.5,28 25,31 22.5,28" fill="#38bdf8"/><circle cx="23" cy="14" r="8.8" fill="#fde6d8"/><ellipse cx="27.5" cy="17" rx="1.6" ry=".9" fill="#fda4af" opacity=".6"/><path d="M14 14C14 5.5 32 5.5 32 14C29 10 26 11.5 24 14C22 11 19 10 16.5 14L15.5 25L13.5 23Z" fill="#0b0914"/><ellipse cx="27" cy="14.5" rx="2.1" ry="2.5" fill="#1e3a8a"/><ellipse cx="27" cy="15" rx="1.6" ry="1.8" fill="#38bdf8"/><circle cx="26.4" cy="13.8" r=".8" fill="#fff"/><path d="M24.8 12.2Q27 11 29.2 12.5" fill="none" stroke="#0b0914" stroke-width="1.3" stroke-linecap="round"/><path d="M26 18.5Q27.5 19.5 28.8 18.3" fill="none" stroke="#9f1239" stroke-linecap="round"/><path d="M14.5 13A8.8 8.8 0 0 1 31.5 13" fill="none" stroke="#1e293b" stroke-width="2.5"/><circle cx="21" cy="14.8" r="3.8" fill="#090910" stroke="#fbbf24" stroke-width="1.1"/><polygon points="21,12.5 22.5,14.8 21,17.1 19.5,14.8" fill="#38bdf8"/><g class="ll"><line x1="23" y1="35" x2="23" y2="45" stroke="#334155" stroke-width="3.5" stroke-linecap="round"/><path d="M21 45H26V47H21Z" fill="#090910" stroke="#38bdf8" stroke-width=".7"/></g><g class="al"><line x1="23" y1="24" x2="24" y2="31" stroke="#fde6d8" stroke-width="2.6" stroke-linecap="round"/><path d="M21.5 23.5H25L25.5 28H21Z" fill="#090910" stroke="#f59e0b" stroke-width=".6"/></g></g></svg>
-<svg class="w w2" viewBox="0 0 46 52"><g class="bb"><path class="hf" d="M18 6Q7 11 8 24Q13 21 16 25Q18 16 20 8Z" fill="#f1f5f9" stroke="#94a3b8" stroke-width=".7"/><path d="M16 21L10 39L19 37Z" fill="#0f172a" stroke="#475569" stroke-width=".8"/><g class="lr"><rect x="20.5" y="34" width="4.5" height="11" rx="1.5" fill="#1e293b" stroke="#94a3b8" stroke-width=".7"/></g><rect x="15" y="21" width="16" height="15" rx="3" fill="#11131f" stroke="#94a3b8"/><polygon points="23,24 25.5,28 23,32 20.5,28" fill="none" stroke="#e2e8f0" stroke-width=".9"/><circle cx="23" cy="13.5" r="9.2" fill="#0f111a" stroke="#64748b" stroke-width="1.2"/><path d="M24 12L28.5 14L31.5 12M28.5 14V18.5" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M14 12.5A9.2 9.2 0 0 1 32 12.5" fill="none" stroke="#334155" stroke-width="2.6"/><circle cx="21" cy="14.5" r="3.8" fill="#090910" stroke="#e2e8f0" stroke-width="1.2"/><polygon points="21,12.2 22.5,14.5 21,16.8 19.5,14.5" fill="#fff"/><g class="ll"><rect x="20.5" y="34" width="4.5" height="11" rx="1.5" fill="#334155" stroke="#e2e8f0" stroke-width=".7"/></g><g class="al"><rect x="20.5" y="22.5" width="4.5" height="9" rx="2" fill="#1e293b" stroke="#cbd5e1" stroke-width=".8"/></g></g></svg>
-<svg class="w w3" viewBox="0 0 46 52"><g class="bb"><path class="hf" d="M16 12Q5 22 8 39Q14 36 17 40Q20 36 22 39Q24 24 22 12Z" fill="#8c5832" stroke="#5c361b" stroke-width=".7"/><g class="lr"><line x1="23" y1="35" x2="23" y2="45" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"/><path d="M21 45H26V47H21Z" fill="#18121e" stroke="#fbbf24" stroke-width=".7"/></g><path d="M17 23H29L33 37H13Z" fill="#2e1065" stroke="#fbbf24" stroke-width=".8"/><path d="M14 34H32L33 37H13Z" fill="#f8fafc"/><circle cx="23" cy="14" r="8.8" fill="#fde6d8"/><ellipse cx="27.5" cy="17" rx="1.7" ry="1" fill="#fb7185" opacity=".65"/><path d="M14 14C14 5.5 32 5.5 32 14C29 10 26 11.5 24 14C22 11 19 10 16.5 14L15 26L13 24Z" fill="#7c4b27"/><path d="M25 14Q27 11.8 29 14" fill="none" stroke="#451a03" stroke-width="1.5" stroke-linecap="round"/><path d="M25.5 17Q27.3 20.8 29 17Z" fill="#f43f5e" stroke="#881337" stroke-width=".5"/><path d="M14.5 13A8.8 8.8 0 0 1 31.5 13" fill="none" stroke="#292524" stroke-width="2.5"/><circle cx="21" cy="14.8" r="3.8" fill="#1c1917" stroke="#fbbf24" stroke-width="1.2"/><polygon points="21,12.5 22.5,14.8 21,17.1 19.5,14.8" fill="#fbbf24"/><g class="ll"><line x1="23" y1="35" x2="23" y2="45" stroke="#334155" stroke-width="3.5" stroke-linecap="round"/><path d="M21 45H26V47H21Z" fill="#18121e" stroke="#fbbf24" stroke-width=".7"/></g><g class="al"><line x1="23" y1="24" x2="24" y2="31" stroke="#fde6d8" stroke-width="2.6" stroke-linecap="round"/><path d="M21 23.5H25L26 28.5H20.5Z" fill="#f1f5f9" stroke="#7e22ce" stroke-width=".7"/></g></g></svg>
-<svg class="w w4" viewBox="0 0 46 52"><g class="bb"><path class="hf" d="M18 6Q7 11 8 25Q13 22 16 26Q18 16 20 8Z" fill="#4c1d95" stroke="#a855f7" stroke-width=".7"/><path d="M16 21L10 39L19 37Z" fill="#2e1065" stroke="#9333ea" stroke-width=".8"/><g class="lr"><rect x="20.5" y="34" width="4.5" height="11" rx="1.5" fill="#1e1b4b" stroke="#9333ea" stroke-width=".7"/></g><rect x="15.5" y="21" width="15" height="15" rx="3" fill="#090912" stroke="#7e22ce"/><polygon points="21,25 25,25 24,36 22,36" fill="#581c87"/><circle cx="23" cy="13.5" r="9" fill="#090912" stroke="#7e22ce" stroke-width="1.2"/><path d="M15 20Q23 23 31 20L30 23Q23 26 16 23Z" fill="#581c87" stroke="#a855f7" stroke-width=".6"/><path d="M24 12L28.5 14L31.5 12M28.5 14V18.5" fill="none" stroke="#e879f9" stroke-width="1.8" stroke-linecap="round"/><path d="M14 12.5A9 9 0 0 1 32 12.5" fill="none" stroke="#1e1b4b" stroke-width="2.6"/><circle cx="21" cy="14.5" r="3.8" fill="#090910" stroke="#c084fc" stroke-width="1.2"/><polygon points="21,12.2 22.5,14.5 21,16.8 19.5,14.5" fill="#e879f9"/><g class="ll"><rect x="20.5" y="34" width="4.5" height="11" rx="1.5" fill="#312e81" stroke="#c084fc" stroke-width=".7"/></g><g class="al"><rect x="20.5" y="22.5" width="4.5" height="9" rx="2" fill="#1e1b4b" stroke="#a855f7" stroke-width=".8"/></g></g></svg>
-<div class="neon" id="nb"><div class="bar"><div class="info"><span>Nothing to me...</span><button id="lb" class="btn" onclick="tg()">🔁 Boucle : ON</button></div><audio id="pl" controls><source src="episode2.mp3.mp3" type="audio/mpeg"></audio></div></div>
-</div><script>
-let lp=true;const pl=document.getElementById('pl'),lb=document.getElementById('lb'),nb=document.getElementById('nb'),st=document.getElementById('st');
-function tg(){lp=!lp;lb.innerText=lp?'🔁 Boucle : ON':'🔁 Boucle : OFF';lb.classList.toggle('off',!lp)}
-pl.onplay=()=>{nb.classList.add('play');st.classList.add('play')};pl.onpause=()=>{nb.classList.remove('play');st.classList.remove('play')};
-pl.onended=()=>{if(lp){pl.currentTime=0;pl.play()}else{nb.classList.remove('play');st.classList.remove('play')}};
-</script></body></html>
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>La Reine des Cendres — Lecteur Obsidia</title>
+<style>
+:root{color-scheme:dark;--pink:#ff4ba8;--cyan:#53cfff;--purple:#a96aff}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:transparent;font-family:Segoe UI,Arial,sans-serif;color:#f5eeff}
+body{padding:26px 14px 34px;overflow-x:hidden}
+.player{max-width:1000px;margin:auto;filter:drop-shadow(0 0 17px #5c2ead55)}
+.duel{position:relative;aspect-ratio:1774/455;background:#090b19 url('duel-obsidia.webp') center/100% 100% no-repeat;overflow:hidden;border:1px solid #7d4bdd;border-bottom:none;border-radius:20px 20px 0 0;isolation:isolate}
+.duel:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 12%,#b461ff1a 38%,#fff2 52%,#4fd5ff1a 64%,transparent 90%);animation:breath 4s ease-in-out infinite;pointer-events:none}
+.clash{position:absolute;left:52.2%;top:51%;width:7%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%) scale(.7);pointer-events:none;background:radial-gradient(circle,#fff9 0%,#ffd5ff99 12%,#ff87b755 24%,transparent 65%);mix-blend-mode:screen;animation:clash 3s ease-in-out infinite}
+.sparks{position:absolute;left:52.2%;top:51%;width:2px;height:2px;pointer-events:none;box-shadow:0 -30px 4px 1px #ffe4a6,28px -15px 3px #ffc0f9,-35px 18px 3px #52d4ff,32px 29px 3px #fff5cc,-27px -26px 3px #f88aff;animation:sparks 3s ease-out infinite}
+@keyframes clash{0%,72%,100%{opacity:.25;transform:translate(-50%,-50%) scale(.6)}80%{opacity:1;transform:translate(-50%,-50%) scale(1.5)}89%{opacity:.5;transform:translate(-50%,-50%) scale(.85)}}
+@keyframes sparks{0%,72%,100%{opacity:.2;transform:scale(.7)}80%{opacity:1;transform:scale(1.8)}92%{opacity:0;transform:scale(3)}}
+@keyframes breath{0%,100%{opacity:.3}50%{opacity:.85}}
+.deck{position:relative;background:linear-gradient(145deg,#10101f 0%,#090919 50%,#0a1122 100%);padding:22px clamp(16px,3.5vw,37px) 24px;border:2px solid #a66bfc;border-top:2px solid #f257af;border-radius:0 0 24px 24px;box-shadow:inset 0 0 24px #451c8055,0 0 20px #894dfa66;overflow:hidden}
+.deck:before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(90deg,transparent,#4de2ff33,transparent,#ff59b633,transparent);background-size:200% 100%;animation:shine 7s linear infinite;opacity:.55}
+@keyframes shine{to{background-position:200% 0}}
+.brand,.track,.controls,.timeline,.bottom{position:relative;z-index:1}
+.brand{text-align:center;font-family:Georgia,serif;letter-spacing:.19em;font-size:clamp(15px,2.6vw,26px);text-shadow:0 0 17px #d757ff,0 0 30px #8c2aff;margin:0 0 7px}
+.track{text-align:center;color:#b8afd2;letter-spacing:.08em;font-size:12px;margin-bottom:17px}
+.controls{display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:16px}
+button{font:inherit;cursor:pointer;touch-action:manipulation}
+.iconbtn{height:38px;min-width:38px;border:1px solid #7f6aab;background:#1b1933bb;color:#f7edff;border-radius:12px;font-size:18px;transition:.2s;box-shadow:inset 0 0 8px #8144ef44}
+.iconbtn:hover,.iconbtn:focus-visible{border-color:#68ddff;box-shadow:0 0 12px #46cfff66;outline:none}
+.iconbtn.active{color:white;border-color:#ff72ca;background:#6b225f88;box-shadow:0 0 14px #ff48b777}
+.play{height:59px;width:59px;border-radius:50%;font-size:23px;border:2px solid #ff86cf;color:white;background:radial-gradient(circle,#4b164d,#170e2c);box-shadow:0 0 16px #f759bb99,inset 0 0 13px #ff57b755}
+.timeline,.bottom{display:flex;align-items:center;gap:12px}
+.timeline span{min-width:40px;text-align:center;font-variant-numeric:tabular-nums;color:#d3cce4;font-size:12px}
+input[type=range]{accent-color:#b975ff;cursor:pointer;min-width:0}
+#seek{flex:1;width:100%;height:20px}
+.bottom{margin-top:10px;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.volume{display:flex;gap:9px;align-items:center;color:#b9b3dc;font-size:13px}.volume input{width:120px}
+.status{font-size:11px;color:#a9b1d4;letter-spacing:.05em}
+.live-dot{display:inline-block;width:6px;height:6px;margin-right:7px;background:#b56cff;border-radius:50%;box-shadow:0 0 7px #ba6bff}
+@media(max-width:460px){body{padding:18px 7px 20px}.deck{padding:16px 12px 18px}.controls{gap:10px}.volume input{width:75px}.brand{letter-spacing:.08em}.duel{border-radius:12px 12px 0 0}.status{font-size:10px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important}}
+</style>
+</head>
+<body>
+<main class="player" aria-label="Lecteur audio de La Reine des Cendres">
+ <section class="duel" role="img" aria-label="Eiko et Aren s'affrontent dans Obsidia">
+  <span class="clash"></span><span class="sparks"></span>
+ </section>
+ <section class="deck">
+  <h1 class="brand">LA REINE DES CENDRES</h1>
+  <div class="track">Nothing to me...</div>
+  <div class="controls">
+   <button id="restart" class="iconbtn" type="button" aria-label="Recommencer le morceau" title="Recommencer">⏮</button>
+   <button id="play" class="play" type="button" aria-label="Lecture">▶</button>
+   <button id="loop" class="iconbtn active" type="button" aria-label="Boucle activée" aria-pressed="true" title="Boucle activée">↻</button>
+  </div>
+  <div class="timeline"><span id="current">0:00</span><input id="seek" aria-label="Progression de la musique" type="range" min="0" max="1000" value="0"><span id="duration">0:00</span></div>
+  <div class="bottom"><div class="volume"><span aria-hidden="true">🔊</span><input id="volume" type="range" min="0" max="100" value="80" aria-label="Volume"></div><div class="status"><span class="live-dot"></span><span id="state">PRÊT À ÉCOUTER · BOUCLE ACTIVE</span></div></div>
+  <audio id="audio" preload="metadata" loop src="episode2.mp3.mp3"></audio>
+ </section>
+</main>
+<script>
+(() => {
+ const audio=document.getElementById('audio'),play=document.getElementById('play'),loop=document.getElementById('loop'),restart=document.getElementById('restart'),seek=document.getElementById('seek'),volume=document.getElementById('volume'),current=document.getElementById('current'),duration=document.getElementById('duration'),state=document.getElementById('state');
+ audio.volume=.8; audio.loop=true;
+ const fmt=t=>Number.isFinite(t)?`${Math.floor(t/60)}:${String(Math.floor(t%60)).padStart(2,'0')}`:'0:00';
+ const update=()=>{current.textContent=fmt(audio.currentTime);duration.textContent=fmt(audio.duration);seek.value=Number.isFinite(audio.duration)&&audio.duration>0?Math.round(audio.currentTime/audio.duration*1000):0};
+ const sync=()=>{const active=!audio.paused;play.textContent=active?'❚❚':'▶';play.setAttribute('aria-label',active?'Pause':'Lecture');state.textContent=active?'LECTURE EN COURS · '+(audio.loop?'BOUCLE ACTIVE':'BOUCLE DÉSACTIVÉE'):'PRÊT À ÉCOUTER · '+(audio.loop?'BOUCLE ACTIVE':'BOUCLE DÉSACTIVÉE')};
+ play.addEventListener('click',async()=>{if(audio.paused){try{await audio.play()}catch(e){state.textContent='IMPOSSIBLE DE LIRE LE FICHIER AUDIO'}}else{audio.pause()}sync()});
+ restart.addEventListener('click',()=>{audio.currentTime=0;update()});
+ loop.addEventListener('click',()=>{audio.loop=!audio.loop;loop.classList.toggle('active',audio.loop);loop.setAttribute('aria-pressed',String(audio.loop));loop.setAttribute('aria-label',audio.loop?'Boucle activée':'Boucle désactivée');loop.title=audio.loop?'Boucle activée':'Boucle désactivée';sync()});
+ volume.addEventListener('input',()=>audio.volume=Number(volume.value)/100);
+ seek.addEventListener('input',()=>{if(Number.isFinite(audio.duration)) audio.currentTime=Number(seek.value)/1000*audio.duration;update()});
+ for(const evt of ['timeupdate','loadedmetadata','durationchange','seeked']) audio.addEventListener(evt,update);
+ for(const evt of ['play','pause','ended']) audio.addEventListener(evt,sync);
+ audio.addEventListener('error',()=>state.textContent='FICHIER AUDIO INTROUVABLE OU NON LISIBLE');
+ sync();update();
+})();
+</script>
+</body>
+</html>
