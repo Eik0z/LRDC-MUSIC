@@ -5,7 +5,7 @@
 <style>
   body {
     margin: 0;
-    padding: 68px 26px 35px 26px; /* Plus d'espace en haut et en bas pour voir les chibis en entier */
+    padding: 85px 38px 52px 38px;
     background: transparent;
     font-family: 'Segoe UI', sans-serif;
     overflow: hidden;
@@ -13,17 +13,16 @@
 
   .player-stage {
     position: relative;
-    max-width: 620px;
+    max-width: 600px;
     margin: auto;
   }
 
-  /* Bordure néon tournante */
   .neon-wrapper {
     position: relative;
     border-radius: 50px;
     padding: 3px;
     overflow: hidden;
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.5), 0 0 35px rgba(56, 189, 248, 0.25);
+    box-shadow: 0 0 22px rgba(139, 92, 246, 0.55), 0 0 40px rgba(56, 189, 248, 0.3);
   }
 
   .neon-wrapper::before {
@@ -47,7 +46,6 @@
     100% { transform: rotate(360deg); }
   }
 
-  /* Intérieur du lecteur */
   .mini-bar {
     position: relative;
     z-index: 1;
@@ -96,24 +94,24 @@
     outline: none;
   }
 
-  /* --- CHIBIS EIKO & CAROL QUI MARCHENT AUTOUR --- */
   .walker {
     position: absolute;
-    width: 34px;
-    height: 40px;
+    width: 44px;
+    height: 50px;
     z-index: 10;
     pointer-events: none;
-    offset-path: inset(-32px -16px -16px -16px round 50px);
+    offset-path: inset(-24px -24px -24px -24px round 60px);
     offset-rotate: auto;
-    animation: patrol 16s linear infinite;
+    offset-anchor: 50% 92%;
+    animation: patrol 18s linear infinite;
   }
 
   .walker-carol {
-    animation-delay: -8s;
+    animation-delay: -9s;
   }
 
   .playing .walker {
-    animation-duration: 9s;
+    animation-duration: 10s;
   }
 
   @keyframes patrol {
@@ -121,18 +119,23 @@
     100% { offset-distance: 100%; }
   }
 
-  .leg-l { transform-origin: 17px 26px; animation: swing 0.45s ease-in-out infinite alternate; }
-  .leg-r { transform-origin: 17px 26px; animation: swing 0.45s ease-in-out infinite alternate-reverse; }
-  .arm-l { transform-origin: 17px 18px; animation: swing 0.45s ease-in-out infinite alternate-reverse; }
+  .leg-l { transform-origin: 22px 34px; animation: swing 0.45s ease-in-out infinite alternate; }
+  .leg-r { transform-origin: 22px 34px; animation: swing 0.45s ease-in-out infinite alternate-reverse; }
+  .arm-l { transform-origin: 22px 23px; animation: swing 0.45s ease-in-out infinite alternate-reverse; }
+  .hair-flow { transform-origin: 20px 14px; animation: hairWave 0.6s ease-in-out infinite alternate; }
   .body-bob { animation: bob 0.225s ease-in-out infinite alternate; }
 
   @keyframes swing {
-    from { transform: rotate(-25deg); }
-    to   { transform: rotate(25deg); }
+    from { transform: rotate(-24deg); }
+    to   { transform: rotate(24deg); }
+  }
+  @keyframes hairWave {
+    from { transform: rotate(-4deg); }
+    to   { transform: rotate(5deg); }
   }
   @keyframes bob {
     from { transform: translateY(0px); }
-    to   { transform: translateY(-2px); }
+    to   { transform: translateY(-2.5px); }
   }
 </style>
 </head>
@@ -140,43 +143,72 @@
 
 <div class="player-stage" id="stageBox">
 
-  <!-- CHIBI EIKO (Cheveux noirs, casque néon bleu, cristal bleu) -->
-  <svg class="walker" viewBox="0 0 34 40">
+  <svg class="walker" viewBox="0 0 44 50">
+    <defs>
+      <filter id="glowBlue" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="1.5" result="blur"/>
+        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+      </filter>
+    </defs>
     <g class="body-bob">
-      <path d="M12 10 Q6 18 8 28 Q13 26 15 28 Q17 20 16 10 Z" fill="#0f0c1d" stroke="#38bdf8" stroke-width="0.6"/>
-      <line class="leg-r" x1="17" y1="26" x2="17" y2="35" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
-      <path d="M13 17 L21 17 L23 27 L11 27 Z" fill="#090910" stroke="#38bdf8" stroke-width="0.8"/>
-      <polygon points="18,19 20,21.5 18,24 16,21.5" fill="#38bdf8"/>
-      <circle cx="17" cy="11" r="6.5" fill="#fde6d8"/>
-      <path d="M10.5 11 C10.5 5, 23.5 5, 23.5 11 C21 8, 18 9, 17 11 C15 9, 12 8, 10.5 11 Z" fill="#0f0c1d"/>
-      <path d="M19 11.5 Q20.5 12.5 22 11.5" fill="none" stroke="#0f0c1d" stroke-width="1.1" stroke-linecap="round"/>
-      <path d="M11 10 A6.5 6.5 0 0 1 23 10" fill="none" stroke="#1e293b" stroke-width="2"/>
-      <circle cx="16.5" cy="11" r="2.8" fill="#0f172a" stroke="#38bdf8" stroke-width="1.2"/>
-      <circle cx="16.5" cy="11" r="1" fill="#38bdf8"/>
-      <line class="leg-l" x1="17" y1="26" x2="17" y2="35" stroke="#334155" stroke-width="3" stroke-linecap="round"/>
-      <line class="arm-l" x1="17" y1="18" x2="17" y2="24" stroke="#fde6d8" stroke-width="2.2" stroke-linecap="round"/>
+      <path class="hair-flow" d="M16 12 Q6 22 9 37 Q14 35 16 38 Q19 35 21 37 Q23 24 21 12 Z" fill="#0b0914" stroke="#1e293b" stroke-width="0.7"/>
+      <g class="leg-r">
+        <line x1="22" y1="34" x2="22" y2="43" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M20 43 L25 43 L25 45 L20 45 Z" fill="#090910" stroke="#38bdf8" stroke-width="0.6"/>
+      </g>
+      <path d="M17 22 L27 22 L30 35 L14 35 Z" fill="#090912" stroke="#38bdf8" stroke-width="0.8"/>
+      <path d="M19 22 L22 28 L25 22" fill="none" stroke="#64748b" stroke-width="0.8"/>
+      <polygon points="24,24.5 26.5,27.5 24,30.5 21.5,27.5" fill="#38bdf8" filter="url(#glowBlue)"/>
+      <circle cx="22" cy="14" r="8.5" fill="#fde6d8"/>
+      <ellipse cx="26.5" cy="16.5" rx="1.6" ry="0.9" fill="#fda4af" opacity="0.6"/>
+      <path d="M13.5 14 C13.5 6, 30.5 6, 30.5 14 C28 10, 25 11.5, 23 14 C21 11, 18 10, 16 14 L15 24 L13 22 Z" fill="#0b0914"/>
+      <path d="M17 8.5 Q22 7.5 26 9" fill="none" stroke="#38bdf8" stroke-width="0.9" opacity="0.6" stroke-linecap="round"/>
+      <path d="M24.5 14.5 Q26.5 16 28.5 14.5" fill="none" stroke="#0b0914" stroke-width="1.3" stroke-linecap="round"/>
+      <line x1="28" y1="14.5" x2="29.3" y2="13.8" stroke="#0b0914" stroke-width="0.9"/>
+      <path d="M25.5 18.2 Q26.8 19 27.8 18.2" fill="none" stroke="#9f1239" stroke-width="0.9" stroke-linecap="round"/>
+      <path d="M14 13 A8.5 8.5 0 0 1 30 13" fill="none" stroke="#1e293b" stroke-width="2.4"/>
+      <circle cx="20.5" cy="14.5" r="3.6" fill="#090910" stroke="#38bdf8" stroke-width="1.3"/>
+      <circle cx="20.5" cy="14.5" r="1.5" fill="none" stroke="#38bdf8" stroke-width="0.8" filter="url(#glowBlue)"/>
+      <g class="leg-l">
+        <line x1="22" y1="34" x2="22" y2="43" stroke="#334155" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M20 43 L25 43 L25 45 L20 45 Z" fill="#090910" stroke="#38bdf8" stroke-width="0.6"/>
+      </g>
+      <g class="arm-l">
+        <line x1="22" y1="23" x2="23" y2="30" stroke="#fde6d8" stroke-width="2.6" stroke-linecap="round"/>
+        <path d="M20.5 22.5 L24 22.5 L24.5 27 L20 27 Z" fill="#090910" stroke="#38bdf8" stroke-width="0.6"/>
+      </g>
     </g>
   </svg>
 
-  <!-- CHIBI CAROL (Cheveux châtains tressés, tenue noire/or, casque doré) -->
-  <svg class="walker walker-carol" viewBox="0 0 34 40">
+  <svg class="walker walker-carol" viewBox="0 0 44 50">
     <g class="body-bob">
-      <path d="M12 10 Q5 18 7 29 Q13 27 16 28 Q17 20 16 10 Z" fill="#9a6338" stroke="#f59e0b" stroke-width="0.6"/>
-      <line class="leg-r" x1="17" y1="26" x2="17" y2="35" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
-      <path d="M13 17 L21 17 L23 27 L11 27 Z" fill="#18121e" stroke="#f59e0b" stroke-width="0.9"/>
-      <circle cx="17" cy="11" r="6.5" fill="#fde6d8"/>
-      <path d="M10.5 11 C10.5 5, 23.5 5, 23.5 11 C21 8, 18 9, 17 11 C15 9, 12 8, 10.5 11 Z" fill="#855129"/>
-      <path d="M19 10.5 Q20.5 9.2 22 10.5" fill="none" stroke="#451a03" stroke-width="1.1" stroke-linecap="round"/>
-      <path d="M19.5 13 Q20.8 14.8 22 13 Z" fill="#f43f5e"/>
-      <path d="M11 10 A6.5 6.5 0 0 1 23 10" fill="none" stroke="#292524" stroke-width="2"/>
-      <circle cx="16.5" cy="11" r="2.8" fill="#1c1917" stroke="#fbbf24" stroke-width="1.2"/>
-      <circle cx="16.5" cy="11" r="1" fill="#fbbf24"/>
-      <line class="leg-l" x1="17" y1="26" x2="17" y2="35" stroke="#334155" stroke-width="3" stroke-linecap="round"/>
-      <line class="arm-l" x1="17" y1="18" x2="17" y2="24" stroke="#fde6d8" stroke-width="2.2" stroke-linecap="round"/>
+      <path class="hair-flow" d="M16 12 Q5 22 8 38 Q13 35 16 38 Q19 35 22 37 Q23 24 21 12 Z" fill="#8c5832" stroke="#5c361b" stroke-width="0.7"/>
+      <g class="leg-r">
+        <line x1="22" y1="34" x2="22" y2="43" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M20 43 L25 43 L25 45 L20 45 Z" fill="#18121e" stroke="#fbbf24" stroke-width="0.6"/>
+      </g>
+      <path d="M17 22 L27 22 L30 35 L14 35 Z" fill="#18121e" stroke="#f59e0b" stroke-width="0.9"/>
+      <line x1="15" y1="32.5" x2="29" y2="32.5" stroke="#fbbf24" stroke-width="0.9"/>
+      <circle cx="22" cy="14" r="8.5" fill="#fde6d8"/>
+      <ellipse cx="26.5" cy="16.5" rx="1.7" ry="1" fill="#fb7185" opacity="0.65"/>
+      <path d="M13.5 14 C13.5 6, 30.5 6, 30.5 14 C28 10, 25 11.5, 23 14 C21 11, 18 10, 16 14 L14.5 25 L12.5 23 Z" fill="#7c4b27"/>
+      <path d="M17 8.5 Q22 7.5 26 9" fill="none" stroke="#fbbf24" stroke-width="0.9" opacity="0.65" stroke-linecap="round"/>
+      <path d="M24.5 14 Q26.5 12 28.5 14" fill="none" stroke="#451a03" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M25 17 Q26.8 20.5 28.5 17 Z" fill="#f43f5e" stroke="#881337" stroke-width="0.5"/>
+      <path d="M14 13 A8.5 8.5 0 0 1 30 13" fill="none" stroke="#292524" stroke-width="2.4"/>
+      <circle cx="20.5" cy="14.5" r="3.6" fill="#1c1917" stroke="#fbbf24" stroke-width="1.3"/>
+      <circle cx="20.5" cy="14.5" r="1.2" fill="#fbbf24"/>
+      <g class="leg-l">
+        <line x1="22" y1="34" x2="22" y2="43" stroke="#334155" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M20 43 L25 43 L25 45 L20 45 Z" fill="#18121e" stroke="#fbbf24" stroke-width="0.6"/>
+      </g>
+      <g class="arm-l">
+        <line x1="22" y1="23" x2="23" y2="30" stroke="#fde6d8" stroke-width="2.6" stroke-linecap="round"/>
+        <path d="M20.5 22.5 L24 22.5 L24.5 27 L20 27 Z" fill="#18121e" stroke="#fbbf24" stroke-width="0.6"/>
+      </g>
     </g>
   </svg>
 
-  <!-- Le lecteur néon -->
   <div class="neon-wrapper" id="neonBox">
     <div class="mini-bar">
       <div class="track-info">
