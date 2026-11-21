@@ -1,80 +1,101 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>La Reine des Cendres — Lecteur Obsidia</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La Reine des Cendres • Lecteur Obsidia / ROXOR</title>
 <style>
-:root{color-scheme:dark;--pink:#ff4ba8;--cyan:#53cfff;--purple:#a96aff}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:transparent;font-family:Segoe UI,Arial,sans-serif;color:#f5eeff}
-body{padding:26px 14px 34px;overflow-x:hidden}
-.player{max-width:1000px;margin:auto;filter:drop-shadow(0 0 17px #5c2ead55)}
-.duel{position:relative;aspect-ratio:1774/455;background:#090b19 url('duel-obsidia.webp') center/100% 100% no-repeat;overflow:hidden;border:1px solid #7d4bdd;border-bottom:none;border-radius:20px 20px 0 0;isolation:isolate}
-.duel:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 12%,#b461ff1a 38%,#fff2 52%,#4fd5ff1a 64%,transparent 90%);animation:breath 4s ease-in-out infinite;pointer-events:none}
-.clash{position:absolute;left:52.2%;top:51%;width:7%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%) scale(.7);pointer-events:none;background:radial-gradient(circle,#fff9 0%,#ffd5ff99 12%,#ff87b755 24%,transparent 65%);mix-blend-mode:screen;animation:clash 3s ease-in-out infinite}
-.sparks{position:absolute;left:52.2%;top:51%;width:2px;height:2px;pointer-events:none;box-shadow:0 -30px 4px 1px #ffe4a6,28px -15px 3px #ffc0f9,-35px 18px 3px #52d4ff,32px 29px 3px #fff5cc,-27px -26px 3px #f88aff;animation:sparks 3s ease-out infinite}
-@keyframes clash{0%,72%,100%{opacity:.25;transform:translate(-50%,-50%) scale(.6)}80%{opacity:1;transform:translate(-50%,-50%) scale(1.5)}89%{opacity:.5;transform:translate(-50%,-50%) scale(.85)}}
-@keyframes sparks{0%,72%,100%{opacity:.2;transform:scale(.7)}80%{opacity:1;transform:scale(1.8)}92%{opacity:0;transform:scale(3)}}
-@keyframes breath{0%,100%{opacity:.3}50%{opacity:.85}}
-.deck{position:relative;background:linear-gradient(145deg,#10101f 0%,#090919 50%,#0a1122 100%);padding:22px clamp(16px,3.5vw,37px) 24px;border:2px solid #a66bfc;border-top:2px solid #f257af;border-radius:0 0 24px 24px;box-shadow:inset 0 0 24px #451c8055,0 0 20px #894dfa66;overflow:hidden}
-.deck:before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(90deg,transparent,#4de2ff33,transparent,#ff59b633,transparent);background-size:200% 100%;animation:shine 7s linear infinite;opacity:.55}
-@keyframes shine{to{background-position:200% 0}}
-.brand,.track,.controls,.timeline,.bottom{position:relative;z-index:1}
-.brand{text-align:center;font-family:Georgia,serif;letter-spacing:.19em;font-size:clamp(15px,2.6vw,26px);text-shadow:0 0 17px #d757ff,0 0 30px #8c2aff;margin:0 0 7px}
-.track{text-align:center;color:#b8afd2;letter-spacing:.08em;font-size:12px;margin-bottom:17px}
-.controls{display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:16px}
-button{font:inherit;cursor:pointer;touch-action:manipulation}
-.iconbtn{height:38px;min-width:38px;border:1px solid #7f6aab;background:#1b1933bb;color:#f7edff;border-radius:12px;font-size:18px;transition:.2s;box-shadow:inset 0 0 8px #8144ef44}
-.iconbtn:hover,.iconbtn:focus-visible{border-color:#68ddff;box-shadow:0 0 12px #46cfff66;outline:none}
-.iconbtn.active{color:white;border-color:#ff72ca;background:#6b225f88;box-shadow:0 0 14px #ff48b777}
-.play{height:59px;width:59px;border-radius:50%;font-size:23px;border:2px solid #ff86cf;color:white;background:radial-gradient(circle,#4b164d,#170e2c);box-shadow:0 0 16px #f759bb99,inset 0 0 13px #ff57b755}
-.timeline,.bottom{display:flex;align-items:center;gap:12px}
-.timeline span{min-width:40px;text-align:center;font-variant-numeric:tabular-nums;color:#d3cce4;font-size:12px}
-input[type=range]{accent-color:#b975ff;cursor:pointer;min-width:0}
-#seek{flex:1;width:100%;height:20px}
-.bottom{margin-top:10px;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.volume{display:flex;gap:9px;align-items:center;color:#b9b3dc;font-size:13px}.volume input{width:120px}
-.status{font-size:11px;color:#a9b1d4;letter-spacing:.05em}
-.live-dot{display:inline-block;width:6px;height:6px;margin-right:7px;background:#b56cff;border-radius:50%;box-shadow:0 0 7px #ba6bff}
-@media(max-width:460px){body{padding:18px 7px 20px}.deck{padding:16px 12px 18px}.controls{gap:10px}.volume input{width:75px}.brand{letter-spacing:.08em}.duel{border-radius:12px 12px 0 0}.status{font-size:10px}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important}}
+:root{color-scheme:dark;--pink:#ff63bc;--purple:#a977ff;--blue:#6edfff}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;min-height:100%;background:#000!important;color:#f8f0ff;font-family:Segoe UI,Arial,sans-serif}
+body{padding:10px 8px 14px;overflow-x:hidden}
+.player{width:min(100%,850px);margin:0 auto;border-radius:15px;background:#030209;filter:drop-shadow(0 0 10px #8a43cf55)}
+.duel{width:100%;aspect-ratio:2146/652;position:relative;overflow:hidden;isolation:isolate;background:#03010b;border:1px solid #704a9e;border-bottom:0;border-radius:15px 15px 0 0}
+.scene{position:absolute;inset:-1%;background:url('duel-obsidia-v3.webp') center/100% 100% no-repeat;will-change:transform;animation:sceneBreath 10s ease-in-out infinite alternate}
+.duel::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:8;background:linear-gradient(0deg,#05021025,transparent 22%),linear-gradient(100deg,#26002e27,transparent 40%,#33092313 75%,transparent);}
+#particles{position:absolute;inset:0;z-index:6;width:100%;height:100%;pointer-events:none}
+.impact-aura{position:absolute;left:50.2%;top:41%;width:20%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#fff7 0%,#f59dff44 11%,#8fc8ff21 28%,transparent 70%);mix-blend-mode:screen;z-index:3;animation:aura 3.9s ease-in-out infinite}
+.bolt{position:absolute;left:50.2%;top:40%;width:27%;height:2px;z-index:4;transform-origin:50% 50%;background:linear-gradient(90deg,transparent,#85dfff,#fff,#f68bd6,transparent);opacity:0;box-shadow:0 0 9px #edafff,0 0 19px #a4dfff;animation:bolt 5s ease-in-out infinite}
+.bolt.b2{transform:translate(-50%,-50%) rotate(-39deg);animation-delay:.17s}
+.bolt.b3{transform:translate(-50%,-50%) rotate(26deg);animation-delay:.27s}
+.wave{position:absolute;left:50.2%;top:40%;width:8%;aspect-ratio:1;border:1px solid #e2beff;border-radius:50%;z-index:5;opacity:0;box-shadow:0 0 7px #eb9cff,0 0 10px #74d5ff inset;animation:wave 5s ease-out infinite}
+.wave.w2{animation-delay:.18s}
+.flash{position:absolute;inset:0;z-index:7;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 50.2% 41%,#fff9 0%,#f7a8ff3a 12%,transparent 44%);mix-blend-mode:screen;animation:flash 5s infinite}
+.lightbeam{position:absolute;inset:-25% -50%;z-index:2;pointer-events:none;background:linear-gradient(100deg,transparent 45%,#8cdcff0d 48%,#f6b9ff20 50%,transparent 54%);transform:translateX(-35%);animation:beam 12s linear infinite;mix-blend-mode:screen}
+.deck{position:relative;overflow:hidden;padding:12px 20px 15px;background:linear-gradient(115deg,#0d0717,#0c0b20 64%,#060b16);border:1px solid #a365e4;border-top:2px solid #ee5da8;border-radius:0 0 15px 15px;box-shadow:inset 0 0 24px #71368a44,0 0 16px #7d3fc044}
+.deck::before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(95deg,transparent 25%,#a969ff18 45%,#7ddcff1a 52%,transparent 73%);background-size:200% 100%;animation:beam 10s linear infinite}
+.brand{position:relative;margin:0;text-align:center;font:600 clamp(15px,2.8vw,22px) Georgia,serif;letter-spacing:.14em;text-shadow:0 0 10px #cc4dff,0 0 20px #8f3fff}
+.track{position:relative;text-align:center;margin:3px 0 7px;font-size:11px;letter-spacing:.08em;color:#d5bfec}
+.controls{position:relative;display:flex;align-items:center;justify-content:center;gap:10px;margin:0 0 8px}
+button{font:inherit;color:white;cursor:pointer;touch-action:manipulation}
+.iconbtn{height:32px;min-width:34px;display:grid;place-items:center;border:1px solid #76629d;border-radius:9px;background:#19142e;font-size:20px}
+.iconbtn:hover,.iconbtn:focus-visible,.play:hover,.play:focus-visible{outline:2px solid #6fddff;outline-offset:2px}
+.iconbtn.active{border-color:#ff79c5;background:#61204e;box-shadow:0 0 10px #f94dbd88,inset 0 0 9px #d14aa844}
+.play{width:45px;height:45px;display:grid;place-items:center;padding:0;border:2px solid #ff89d3;border-radius:50%;font-size:21px;background:radial-gradient(circle,#75206c,#190d2c);box-shadow:0 0 14px #ff61b6aa}
+.timeline{position:relative;display:flex;align-items:center;gap:9px}
+.timeline span{width:37px;flex-shrink:0;color:#e5dded;font-size:11px;text-align:center;font-variant-numeric:tabular-nums}
+input[type=range]{min-width:0;cursor:pointer;accent-color:#b879fa}
+#seek{flex:1;width:100%;height:16px}
+.bottom{position:relative;margin-top:3px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.volume{display:flex;gap:7px;align-items:center;font-size:12px}#volume{width:95px}
+.status{font-size:10px;color:#bfcae7;letter-spacing:.03em}.dot{display:inline-block;width:6px;height:6px;margin-right:6px;border-radius:50%;background:#b37aff;box-shadow:0 0 9px #bd78ff}
+@keyframes sceneBreath{0%{transform:translate(-.4%,.1%) scale(1.014)}44%{transform:translate(.3%,-.15%) scale(1.025)}53%{transform:translate(-.15%,.05%) scale(1.031)}100%{transform:translate(.2%,-.1%) scale(1.016)}}
+@keyframes aura{0%,65%,100%{opacity:.17;transform:translate(-50%,-50%) scale(.7)}69%{opacity:.8;transform:translate(-50%,-50%) scale(1.15)}81%{opacity:.26;transform:translate(-50%,-50%) scale(.9)}}
+@keyframes bolt{0%,61%,100%{opacity:0;transform:translate(-50%,-50%) rotate(-23deg) scaleX(.15)}66%{opacity:.85;transform:translate(-50%,-50%) rotate(-23deg) scaleX(1)}75%{opacity:0;transform:translate(-50%,-50%) rotate(-23deg) scaleX(1.5)}}
+@keyframes wave{0%,64%,100%{opacity:0;transform:translate(-50%,-50%) scale(.2)}69%{opacity:.9}84%{opacity:0;transform:translate(-50%,-50%) scale(4.3)}}
+@keyframes flash{0%,62%,100%{opacity:0}68%{opacity:.62}74%{opacity:.08}77%{opacity:.21}82%{opacity:0}}
+@keyframes beam{to{transform:translateX(35%);background-position:200% 0}}
+@media(max-width:620px){body{padding:6px 4px 10px}.deck{padding:10px 10px 12px}.brand{letter-spacing:.06em}.bottom{justify-content:center;gap:6px}.status{width:100%;text-align:center}.duel{border-radius:10px 10px 0 0}.player{border-radius:10px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<main class="player" aria-label="Lecteur audio de La Reine des Cendres">
- <section class="duel" role="img" aria-label="Eiko et Aren s'affrontent dans Obsidia">
-  <span class="clash"></span><span class="sparks"></span>
- </section>
- <section class="deck">
-  <h1 class="brand">LA REINE DES CENDRES</h1>
-  <div class="track">Nothing to me...</div>
-  <div class="controls">
-   <button id="restart" class="iconbtn" type="button" aria-label="Recommencer le morceau" title="Recommencer">⏮</button>
-   <button id="play" class="play" type="button" aria-label="Lecture">▶</button>
-   <button id="loop" class="iconbtn active" type="button" aria-label="Boucle activée" aria-pressed="true" title="Boucle activée">↻</button>
-  </div>
-  <div class="timeline"><span id="current">0:00</span><input id="seek" aria-label="Progression de la musique" type="range" min="0" max="1000" value="0"><span id="duration">0:00</span></div>
-  <div class="bottom"><div class="volume"><span aria-hidden="true">🔊</span><input id="volume" type="range" min="0" max="100" value="80" aria-label="Volume"></div><div class="status"><span class="live-dot"></span><span id="state">PRÊT À ÉCOUTER · BOUCLE ACTIVE</span></div></div>
-  <audio id="audio" preload="metadata" loop src="episode2.mp3.mp3"></audio>
- </section>
+<main class="player" aria-label="Lecteur audio La Reine des Cendres">
+  <section class="duel" role="img" aria-label="Eiko et Aren s'affrontent à Obsidia. Drapeau d'Obsidia à gauche, drapeau de ROXOR à droite.">
+    <div class="scene"></div><div class="lightbeam"></div><div class="impact-aura"></div>
+    <div class="bolt"></div><div class="bolt b2"></div><div class="bolt b3"></div>
+    <div class="wave"></div><div class="wave w2"></div><div class="flash"></div>
+    <canvas id="particles" aria-hidden="true"></canvas>
+  </section>
+  <section class="deck">
+    <h1 class="brand">LA REINE DES CENDRES</h1>
+    <div class="track">Nothing to me...</div>
+    <div class="controls">
+      <button class="iconbtn" id="restart" type="button" aria-label="Recommencer le morceau" title="Recommencer">⏮</button>
+      <button class="play" id="play" type="button" aria-label="Lecture" title="Lecture">▶</button>
+      <button class="iconbtn active" id="loop" type="button" aria-pressed="true" aria-label="Boucle activée" title="Boucle activée">↻</button>
+    </div>
+    <div class="timeline"><span id="current">0:00</span><input id="seek" type="range" min="0" max="1000" value="0" aria-label="Progression du morceau"><span id="duration">0:00</span></div>
+    <div class="bottom"><div class="volume"><span aria-hidden="true">🔊</span><input id="volume" type="range" min="0" max="100" value="80" aria-label="Volume"></div>
+      <div class="status" role="status"><span class="dot"></span><span id="state">PRÊT À ÉCOUTER · BOUCLE ACTIVE</span></div></div>
+    <audio id="audio" preload="metadata" loop src="episode2.mp3.mp3"></audio>
+  </section>
 </main>
 <script>
-(() => {
+(()=>{
  const audio=document.getElementById('audio'),play=document.getElementById('play'),loop=document.getElementById('loop'),restart=document.getElementById('restart'),seek=document.getElementById('seek'),volume=document.getElementById('volume'),current=document.getElementById('current'),duration=document.getElementById('duration'),state=document.getElementById('state');
- audio.volume=.8; audio.loop=true;
+ audio.volume=.8;audio.loop=true;
  const fmt=t=>Number.isFinite(t)?`${Math.floor(t/60)}:${String(Math.floor(t%60)).padStart(2,'0')}`:'0:00';
- const update=()=>{current.textContent=fmt(audio.currentTime);duration.textContent=fmt(audio.duration);seek.value=Number.isFinite(audio.duration)&&audio.duration>0?Math.round(audio.currentTime/audio.duration*1000):0};
- const sync=()=>{const active=!audio.paused;play.textContent=active?'❚❚':'▶';play.setAttribute('aria-label',active?'Pause':'Lecture');state.textContent=active?'LECTURE EN COURS · '+(audio.loop?'BOUCLE ACTIVE':'BOUCLE DÉSACTIVÉE'):'PRÊT À ÉCOUTER · '+(audio.loop?'BOUCLE ACTIVE':'BOUCLE DÉSACTIVÉE')};
- play.addEventListener('click',async()=>{if(audio.paused){try{await audio.play()}catch(e){state.textContent='IMPOSSIBLE DE LIRE LE FICHIER AUDIO'}}else{audio.pause()}sync()});
+ const update=()=>{current.textContent=fmt(audio.currentTime);duration.textContent=fmt(audio.duration);if(!seek.matches(':active'))seek.value=Number.isFinite(audio.duration)&&audio.duration>0?Math.round(audio.currentTime/audio.duration*1000):0};
+ const sync=()=>{let playing=!audio.paused;play.textContent=playing?'Ⅱ':'▶';play.setAttribute('aria-label',playing?'Pause':'Lecture');play.title=playing?'Pause':'Lecture';state.textContent=(playing?'LECTURE EN COURS':'PRÊT À ÉCOUTER')+' · '+(audio.loop?'BOUCLE ACTIVE':'BOUCLE DÉSACTIVÉE')};
+ play.addEventListener('click',async()=>{if(audio.paused){try{await audio.play()}catch(e){state.textContent='IMPOSSIBLE DE LIRE LA MUSIQUE'}}else audio.pause();sync()});
  restart.addEventListener('click',()=>{audio.currentTime=0;update()});
  loop.addEventListener('click',()=>{audio.loop=!audio.loop;loop.classList.toggle('active',audio.loop);loop.setAttribute('aria-pressed',String(audio.loop));loop.setAttribute('aria-label',audio.loop?'Boucle activée':'Boucle désactivée');loop.title=audio.loop?'Boucle activée':'Boucle désactivée';sync()});
  volume.addEventListener('input',()=>audio.volume=Number(volume.value)/100);
- seek.addEventListener('input',()=>{if(Number.isFinite(audio.duration)) audio.currentTime=Number(seek.value)/1000*audio.duration;update()});
- for(const evt of ['timeupdate','loadedmetadata','durationchange','seeked']) audio.addEventListener(evt,update);
- for(const evt of ['play','pause','ended']) audio.addEventListener(evt,sync);
- audio.addEventListener('error',()=>state.textContent='FICHIER AUDIO INTROUVABLE OU NON LISIBLE');
- sync();update();
+ seek.addEventListener('input',()=>{if(Number.isFinite(audio.duration)&&audio.duration>0)audio.currentTime=Number(seek.value)/1000*audio.duration;update()});
+ ['timeupdate','loadedmetadata','durationchange','seeked'].forEach(e=>audio.addEventListener(e,update));
+ ['play','pause','ended'].forEach(e=>audio.addEventListener(e,sync));
+ audio.addEventListener('error',()=>state.textContent='FICHIER AUDIO INTROUVABLE OU NON LISIBLE');update();sync();
+ // Particules d'énergie et pluie d'étincelles avec mouvements continus.
+ const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');
+ const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ if(!reduced && ctx){let w=0,h=0,last=0,parts=[],lastBurst=-10000;const rand=(a,b)=>a+Math.random()*(b-a);
+ const resize=()=>{const r=canvas.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);w=r.width;h=r.height;canvas.width=Math.round(w*d);canvas.height=Math.round(h*d);ctx.setTransform(d,0,0,d,0,0)};
+ const spawn=(burst=false)=>{const x=burst?w*.502:rand(0,w),y=burst?h*.41:rand(h*.12,h*.9),ang=rand(0,Math.PI*2),speed=burst?rand(40,150):rand(3,18);parts.push({x,y,vx:Math.cos(ang)*speed,vy:Math.sin(ang)*speed-(burst?0:8),size:burst?rand(.7,2.1):rand(.5,1.25),age:0,life:burst?rand(.35,1.15):rand(2,6),color:Math.random()<.45?'255,179,237':Math.random()<.5?'126,208,255':'255,235,197'});if(parts.length>190)parts.shift()};
+ function frame(t){if(!last)last=t;const dt=Math.min((t-last)/1000,.045);last=t;ctx.clearRect(0,0,w,h);
+ if(Math.random()<.8)spawn();if(t-lastBurst>5000){lastBurst=t;for(let i=0;i<42;i++)spawn(true)}
+ for(let i=parts.length-1;i>=0;i--){const p=parts[i];p.age+=dt;if(p.age>p.life){parts.splice(i,1);continue}p.x+=p.vx*dt;p.y+=p.vy*dt;if(p.life<1.5)p.vy+=105*dt;let a=(1-p.age/p.life)*.82;ctx.fillStyle=`rgba(${p.color},${a})`;ctx.shadowColor=`rgba(${p.color},${a})`;ctx.shadowBlur=p.life<1.5?8:4;ctx.fillRect(p.x,p.y,p.size,p.size*1.8)}ctx.shadowBlur=0;requestAnimationFrame(frame)}
+ resize();window.addEventListener('resize',resize);requestAnimationFrame(frame);
+ }
 })();
 </script>
-</body>
-</html>
+</body></html>
