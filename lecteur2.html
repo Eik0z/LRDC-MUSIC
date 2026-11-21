@@ -1,260 +1,35 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<style>
-  body {
-    margin: 0;
-    padding: 85px 38px 52px 38px;
-    background: transparent;
-    font-family: 'Segoe UI', sans-serif;
-    overflow: hidden;
-  }
-
-  .player-stage {
-    position: relative;
-    max-width: 600px;
-    margin: auto;
-  }
-
-  .neon-wrapper {
-    position: relative;
-    border-radius: 50px;
-    padding: 3px;
-    overflow: hidden;
-    box-shadow: 0 0 22px rgba(139, 92, 246, 0.55), 0 0 40px rgba(56, 189, 248, 0.3);
-  }
-
-  .neon-wrapper::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(transparent, #a855f7, #38bdf8, transparent 40%, transparent 50%, #f59e0b, #38bdf8, transparent 90%);
-    animation: rotateNeon 4s linear infinite;
-    z-index: 0;
-  }
-
-  .neon-wrapper.playing::before {
-    animation-duration: 1.8s;
-  }
-
-  @keyframes rotateNeon {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  .mini-bar {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: linear-gradient(90deg, #090910 0%, #150e24 50%, #0a1420 100%);
-    border-radius: 47px;
-    padding: 6px 16px;
-  }
-
-  .track-info {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    white-space: nowrap;
-    color: #38bdf8;
-    font-size: 13px;
-    font-weight: bold;
-    text-shadow: 0 0 8px rgba(56, 189, 248, 0.7);
-  }
-
-  .loop-btn {
-    font-size: 11px;
-    color: #38bdf8;
-    background: rgba(56, 189, 248, 0.15);
-    padding: 3px 9px;
-    border-radius: 12px;
-    border: 1px solid #38bdf8;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.2s;
-  }
-
-  .loop-btn.off {
-    color: #94a3b8;
-    background: rgba(148, 163, 184, 0.1);
-    border-color: #475569;
-    font-weight: normal;
-  }
-
-  audio {
-    flex: 1;
-    height: 30px;
-    filter: invert(90%) hue-rotate(180deg);
-    outline: none;
-  }
-
-  .walker {
-    position: absolute;
-    width: 44px;
-    height: 50px;
-    z-index: 10;
-    pointer-events: none;
-    offset-path: inset(-24px -24px -24px -24px round 60px);
-    offset-rotate: auto;
-    offset-anchor: 50% 92%;
-    animation: patrol 18s linear infinite;
-  }
-
-  .walker-carol {
-    animation-delay: -9s;
-  }
-
-  .playing .walker {
-    animation-duration: 10s;
-  }
-
-  @keyframes patrol {
-    0%   { offset-distance: 0%; }
-    100% { offset-distance: 100%; }
-  }
-
-  .leg-l { transform-origin: 22px 34px; animation: swing 0.45s ease-in-out infinite alternate; }
-  .leg-r { transform-origin: 22px 34px; animation: swing 0.45s ease-in-out infinite alternate-reverse; }
-  .arm-l { transform-origin: 22px 23px; animation: swing 0.45s ease-in-out infinite alternate-reverse; }
-  .hair-flow { transform-origin: 20px 14px; animation: hairWave 0.6s ease-in-out infinite alternate; }
-  .body-bob { animation: bob 0.225s ease-in-out infinite alternate; }
-
-  @keyframes swing {
-    from { transform: rotate(-24deg); }
-    to   { transform: rotate(24deg); }
-  }
-  @keyframes hairWave {
-    from { transform: rotate(-4deg); }
-    to   { transform: rotate(5deg); }
-  }
-  @keyframes bob {
-    from { transform: translateY(0px); }
-    to   { transform: translateY(-2.5px); }
-  }
-</style>
-</head>
-<body>
-
-<div class="player-stage" id="stageBox">
-
-  <svg class="walker" viewBox="0 0 44 50">
-    <defs>
-      <filter id="glowBlue" x="-30%" y="-30%" width="160%" height="160%">
-        <feGaussianBlur stdDeviation="1.5" result="blur"/>
-        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-      </filter>
-    </defs>
-    <g class="body-bob">
-      <path class="hair-flow" d="M16 12 Q6 22 9 37 Q14 35 16 38 Q19 35 21 37 Q23 24 21 12 Z" fill="#0b0914" stroke="#1e293b" stroke-width="0.7"/>
-      <g class="leg-r">
-        <line x1="22" y1="34" x2="22" y2="43" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"/>
-        <path d="M20 43 L25 43 L25 45 L20 45 Z" fill="#090910" stroke="#38bdf8" stroke-width="0.6"/>
-      </g>
-      <path d="M17 22 L27 22 L30 35 L14 35 Z" fill="#090912" stroke="#38bdf8" stroke-width="0.8"/>
-      <path d="M19 22 L22 28 L25 22" fill="none" stroke="#64748b" stroke-width="0.8"/>
-      <polygon points="24,24.5 26.5,27.5 24,30.5 21.5,27.5" fill="#38bdf8" filter="url(#glowBlue)"/>
-      <circle cx="22" cy="14" r="8.5" fill="#fde6d8"/>
-      <ellipse cx="26.5" cy="16.5" rx="1.6" ry="0.9" fill="#fda4af" opacity="0.6"/>
-      <path d="M13.5 14 C13.5 6, 30.5 6, 30.5 14 C28 10, 25 11.5, 23 14 C21 11, 18 10, 16 14 L15 24 L13 22 Z" fill="#0b0914"/>
-      <path d="M17 8.5 Q22 7.5 26 9" fill="none" stroke="#38bdf8" stroke-width="0.9" opacity="0.6" stroke-linecap="round"/>
-      <path d="M24.5 14.5 Q26.5 16 28.5 14.5" fill="none" stroke="#0b0914" stroke-width="1.3" stroke-linecap="round"/>
-      <line x1="28" y1="14.5" x2="29.3" y2="13.8" stroke="#0b0914" stroke-width="0.9"/>
-      <path d="M25.5 18.2 Q26.8 19 27.8 18.2" fill="none" stroke="#9f1239" stroke-width="0.9" stroke-linecap="round"/>
-      <path d="M14 13 A8.5 8.5 0 0 1 30 13" fill="none" stroke="#1e293b" stroke-width="2.4"/>
-      <circle cx="20.5" cy="14.5" r="3.6" fill="#090910" stroke="#38bdf8" stroke-width="1.3"/>
-      <circle cx="20.5" cy="14.5" r="1.5" fill="none" stroke="#38bdf8" stroke-width="0.8" filter="url(#glowBlue)"/>
-      <g class="leg-l">
-        <line x1="22" y1="34" x2="22" y2="43" stroke="#334155" stroke-width="3.5" stroke-linecap="round"/>
-        <path d="M20 43 L25 43 L25 45 L20 45 Z" fill="#090910" stroke="#38bdf8" stroke-width="0.6"/>
-      </g>
-      <g class="arm-l">
-        <line x1="22" y1="23" x2="23" y2="30" stroke="#fde6d8" stroke-width="2.6" stroke-linecap="round"/>
-        <path d="M20.5 22.5 L24 22.5 L24.5 27 L20 27 Z" fill="#090910" stroke="#38bdf8" stroke-width="0.6"/>
-      </g>
-    </g>
-  </svg>
-
-  <svg class="walker walker-carol" viewBox="0 0 44 50">
-    <g class="body-bob">
-      <path class="hair-flow" d="M16 12 Q5 22 8 38 Q13 35 16 38 Q19 35 22 37 Q23 24 21 12 Z" fill="#8c5832" stroke="#5c361b" stroke-width="0.7"/>
-      <g class="leg-r">
-        <line x1="22" y1="34" x2="22" y2="43" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"/>
-        <path d="M20 43 L25 43 L25 45 L20 45 Z" fill="#18121e" stroke="#fbbf24" stroke-width="0.6"/>
-      </g>
-      <path d="M17 22 L27 22 L30 35 L14 35 Z" fill="#18121e" stroke="#f59e0b" stroke-width="0.9"/>
-      <line x1="15" y1="32.5" x2="29" y2="32.5" stroke="#fbbf24" stroke-width="0.9"/>
-      <circle cx="22" cy="14" r="8.5" fill="#fde6d8"/>
-      <ellipse cx="26.5" cy="16.5" rx="1.7" ry="1" fill="#fb7185" opacity="0.65"/>
-      <path d="M13.5 14 C13.5 6, 30.5 6, 30.5 14 C28 10, 25 11.5, 23 14 C21 11, 18 10, 16 14 L14.5 25 L12.5 23 Z" fill="#7c4b27"/>
-      <path d="M17 8.5 Q22 7.5 26 9" fill="none" stroke="#fbbf24" stroke-width="0.9" opacity="0.65" stroke-linecap="round"/>
-      <path d="M24.5 14 Q26.5 12 28.5 14" fill="none" stroke="#451a03" stroke-width="1.4" stroke-linecap="round"/>
-      <path d="M25 17 Q26.8 20.5 28.5 17 Z" fill="#f43f5e" stroke="#881337" stroke-width="0.5"/>
-      <path d="M14 13 A8.5 8.5 0 0 1 30 13" fill="none" stroke="#292524" stroke-width="2.4"/>
-      <circle cx="20.5" cy="14.5" r="3.6" fill="#1c1917" stroke="#fbbf24" stroke-width="1.3"/>
-      <circle cx="20.5" cy="14.5" r="1.2" fill="#fbbf24"/>
-      <g class="leg-l">
-        <line x1="22" y1="34" x2="22" y2="43" stroke="#334155" stroke-width="3.5" stroke-linecap="round"/>
-        <path d="M20 43 L25 43 L25 45 L20 45 Z" fill="#18121e" stroke="#fbbf24" stroke-width="0.6"/>
-      </g>
-      <g class="arm-l">
-        <line x1="22" y1="23" x2="23" y2="30" stroke="#fde6d8" stroke-width="2.6" stroke-linecap="round"/>
-        <path d="M20.5 22.5 L24 22.5 L24.5 27 L20 27 Z" fill="#18121e" stroke="#fbbf24" stroke-width="0.6"/>
-      </g>
-    </g>
-  </svg>
-
-  <div class="neon-wrapper" id="neonBox">
-    <div class="mini-bar">
-      <div class="track-info">
-        <span>Nothing to me...</span>
-        <button id="loopBtn" class="loop-btn" onclick="toggleLoop()">🔁 Boucle : ON</button>
-      </div>
-      <audio id="player" controls>
-        <source src="episode2.mp3.mp3" type="audio/mpeg">
-      </audio>
-    </div>
-  </div>
-
-</div>
-
-<script>
-  let isLooping = true;
-  const player = document.getElementById('player');
-  const loopBtn = document.getElementById('loopBtn');
-  const neonBox = document.getElementById('neonBox');
-  const stageBox = document.getElementById('stageBox');
-
-  function toggleLoop() {
-    isLooping = !isLooping;
-    loopBtn.innerText = isLooping ? '🔁 Boucle : ON' : '🔁 Boucle : OFF';
-    loopBtn.classList.toggle('off', !isLooping);
-  }
-
-  player.addEventListener('play', () => {
-    neonBox.classList.add('playing');
-    stageBox.classList.add('playing');
-  });
-  player.addEventListener('pause', () => {
-    neonBox.classList.remove('playing');
-    stageBox.classList.remove('playing');
-  });
-
-  player.addEventListener('ended', function() {
-    if (isLooping) {
-      player.currentTime = 0;
-      player.play();
-    } else {
-      neonBox.classList.remove('playing');
-      stageBox.classList.remove('playing');
-    }
-  });
-</script>
-
-</body>
-</html>
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><style>
+body{margin:0;padding:88px 42px 58px;background:transparent;font-family:'Segoe UI',sans-serif;overflow:hidden}
+.stage{position:relative;max-width:600px;margin:auto}
+.neon{position:relative;border-radius:50px;padding:3px;overflow:hidden;box-shadow:0 0 22px rgba(139,92,246,.55),0 0 40px rgba(56,189,248,.3)}
+.neon::before{content:"";position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(transparent,#a855f7,#38bdf8,transparent 40%,transparent 50%,#f59e0b,#38bdf8,transparent 90%);animation:rot 4s linear infinite;z-index:0}
+.neon.play::before{animation-duration:1.8s}@keyframes rot{100%{transform:rotate(360deg)}}
+.bar{position:relative;z-index:1;display:flex;align-items:center;gap:12px;background:linear-gradient(90deg,#090910,#150e24 50%,#0a1420);border-radius:47px;padding:6px 16px}
+.info{display:flex;align-items:center;gap:8px;white-space:nowrap;color:#38bdf8;font-size:13px;font-weight:bold;text-shadow:0 0 8px rgba(56,189,248,.7)}
+.btn{font-size:11px;color:#38bdf8;background:rgba(56,189,248,.15);padding:3px 9px;border-radius:12px;border:1px solid #38bdf8;cursor:pointer;font-weight:bold}
+.btn.off{color:#94a3b8;background:rgba(148,163,184,.1);border-color:#475569;font-weight:normal}
+audio{flex:1;height:30px;filter:invert(90%) hue-rotate(180deg);outline:none}
+.w{position:absolute;width:46px;height:52px;z-index:10;pointer-events:none;offset-path:inset(-24px -26px -24px -26px round 60px);offset-rotate:auto;offset-anchor:50% 92%;animation:walk 24s linear infinite}
+.w1{animation-delay:0s}.w2{animation-delay:-6s}.w3{animation-delay:-12s}.w4{animation-delay:-18s}
+.play .w{animation-duration:14s}.play .w1{animation-delay:0s}.play .w2{animation-delay:-3.5s}.play .w3{animation-delay:-7s}.play .w4{animation-delay:-10.5s}
+@keyframes walk{100%{offset-distance:100%}}
+.ll{transform-origin:23px 35px;animation:sw .45s ease-in-out infinite alternate}
+.lr{transform-origin:23px 35px;animation:sw .45s ease-in-out infinite alternate-reverse}
+.al{transform-origin:23px 24px;animation:sw .45s ease-in-out infinite alternate-reverse}
+.hf{transform-origin:20px 14px;animation:hw .6s ease-in-out infinite alternate}
+.bb{animation:bob .225s ease-in-out infinite alternate}
+@keyframes sw{from{transform:rotate(-22deg)}to{transform:rotate(22deg)}}
+@keyframes hw{from{transform:rotate(-4deg)}to{transform:rotate(5deg)}}
+@keyframes bob{from{transform:translateY(0)}to{transform:translateY(-2.5px)}}
+</style></head><body><div class="stage" id="st">
+<svg class="w w1" viewBox="0 0 46 52"><g class="bb"><path class="hf" d="M16 12Q6 22 9 39Q14 36 17 40Q20 36 22 39Q24 24 22 12Z" fill="#0b0914" stroke="#38bdf8" stroke-width=".6"/><g class="lr"><line x1="23" y1="35" x2="23" y2="45" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"/><path d="M21 45H26V47H21Z" fill="#090910" stroke="#38bdf8" stroke-width=".7"/></g><path d="M17 23H29L32 37H14Z" fill="#0d0a18" stroke="#f59e0b" stroke-width=".7"/><path d="M15 34H31" stroke="#a855f7" stroke-width="1.2"/><polygon points="25,25 27.5,28 25,31 22.5,28" fill="#38bdf8"/><circle cx="23" cy="14" r="8.8" fill="#fde6d8"/><ellipse cx="27.5" cy="17" rx="1.6" ry=".9" fill="#fda4af" opacity=".6"/><path d="M14 14C14 5.5 32 5.5 32 14C29 10 26 11.5 24 14C22 11 19 10 16.5 14L15.5 25L13.5 23Z" fill="#0b0914"/><ellipse cx="27" cy="14.5" rx="2.1" ry="2.5" fill="#1e3a8a"/><ellipse cx="27" cy="15" rx="1.6" ry="1.8" fill="#38bdf8"/><circle cx="26.4" cy="13.8" r=".8" fill="#fff"/><path d="M24.8 12.2Q27 11 29.2 12.5" fill="none" stroke="#0b0914" stroke-width="1.3" stroke-linecap="round"/><path d="M26 18.5Q27.5 19.5 28.8 18.3" fill="none" stroke="#9f1239" stroke-linecap="round"/><path d="M14.5 13A8.8 8.8 0 0 1 31.5 13" fill="none" stroke="#1e293b" stroke-width="2.5"/><circle cx="21" cy="14.8" r="3.8" fill="#090910" stroke="#fbbf24" stroke-width="1.1"/><polygon points="21,12.5 22.5,14.8 21,17.1 19.5,14.8" fill="#38bdf8"/><g class="ll"><line x1="23" y1="35" x2="23" y2="45" stroke="#334155" stroke-width="3.5" stroke-linecap="round"/><path d="M21 45H26V47H21Z" fill="#090910" stroke="#38bdf8" stroke-width=".7"/></g><g class="al"><line x1="23" y1="24" x2="24" y2="31" stroke="#fde6d8" stroke-width="2.6" stroke-linecap="round"/><path d="M21.5 23.5H25L25.5 28H21Z" fill="#090910" stroke="#f59e0b" stroke-width=".6"/></g></g></svg>
+<svg class="w w2" viewBox="0 0 46 52"><g class="bb"><path class="hf" d="M18 6Q7 11 8 24Q13 21 16 25Q18 16 20 8Z" fill="#f1f5f9" stroke="#94a3b8" stroke-width=".7"/><path d="M16 21L10 39L19 37Z" fill="#0f172a" stroke="#475569" stroke-width=".8"/><g class="lr"><rect x="20.5" y="34" width="4.5" height="11" rx="1.5" fill="#1e293b" stroke="#94a3b8" stroke-width=".7"/></g><rect x="15" y="21" width="16" height="15" rx="3" fill="#11131f" stroke="#94a3b8"/><polygon points="23,24 25.5,28 23,32 20.5,28" fill="none" stroke="#e2e8f0" stroke-width=".9"/><circle cx="23" cy="13.5" r="9.2" fill="#0f111a" stroke="#64748b" stroke-width="1.2"/><path d="M24 12L28.5 14L31.5 12M28.5 14V18.5" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M14 12.5A9.2 9.2 0 0 1 32 12.5" fill="none" stroke="#334155" stroke-width="2.6"/><circle cx="21" cy="14.5" r="3.8" fill="#090910" stroke="#e2e8f0" stroke-width="1.2"/><polygon points="21,12.2 22.5,14.5 21,16.8 19.5,14.5" fill="#fff"/><g class="ll"><rect x="20.5" y="34" width="4.5" height="11" rx="1.5" fill="#334155" stroke="#e2e8f0" stroke-width=".7"/></g><g class="al"><rect x="20.5" y="22.5" width="4.5" height="9" rx="2" fill="#1e293b" stroke="#cbd5e1" stroke-width=".8"/></g></g></svg>
+<svg class="w w3" viewBox="0 0 46 52"><g class="bb"><path class="hf" d="M16 12Q5 22 8 39Q14 36 17 40Q20 36 22 39Q24 24 22 12Z" fill="#8c5832" stroke="#5c361b" stroke-width=".7"/><g class="lr"><line x1="23" y1="35" x2="23" y2="45" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"/><path d="M21 45H26V47H21Z" fill="#18121e" stroke="#fbbf24" stroke-width=".7"/></g><path d="M17 23H29L33 37H13Z" fill="#2e1065" stroke="#fbbf24" stroke-width=".8"/><path d="M14 34H32L33 37H13Z" fill="#f8fafc"/><circle cx="23" cy="14" r="8.8" fill="#fde6d8"/><ellipse cx="27.5" cy="17" rx="1.7" ry="1" fill="#fb7185" opacity=".65"/><path d="M14 14C14 5.5 32 5.5 32 14C29 10 26 11.5 24 14C22 11 19 10 16.5 14L15 26L13 24Z" fill="#7c4b27"/><path d="M25 14Q27 11.8 29 14" fill="none" stroke="#451a03" stroke-width="1.5" stroke-linecap="round"/><path d="M25.5 17Q27.3 20.8 29 17Z" fill="#f43f5e" stroke="#881337" stroke-width=".5"/><path d="M14.5 13A8.8 8.8 0 0 1 31.5 13" fill="none" stroke="#292524" stroke-width="2.5"/><circle cx="21" cy="14.8" r="3.8" fill="#1c1917" stroke="#fbbf24" stroke-width="1.2"/><polygon points="21,12.5 22.5,14.8 21,17.1 19.5,14.8" fill="#fbbf24"/><g class="ll"><line x1="23" y1="35" x2="23" y2="45" stroke="#334155" stroke-width="3.5" stroke-linecap="round"/><path d="M21 45H26V47H21Z" fill="#18121e" stroke="#fbbf24" stroke-width=".7"/></g><g class="al"><line x1="23" y1="24" x2="24" y2="31" stroke="#fde6d8" stroke-width="2.6" stroke-linecap="round"/><path d="M21 23.5H25L26 28.5H20.5Z" fill="#f1f5f9" stroke="#7e22ce" stroke-width=".7"/></g></g></svg>
+<svg class="w w4" viewBox="0 0 46 52"><g class="bb"><path class="hf" d="M18 6Q7 11 8 25Q13 22 16 26Q18 16 20 8Z" fill="#4c1d95" stroke="#a855f7" stroke-width=".7"/><path d="M16 21L10 39L19 37Z" fill="#2e1065" stroke="#9333ea" stroke-width=".8"/><g class="lr"><rect x="20.5" y="34" width="4.5" height="11" rx="1.5" fill="#1e1b4b" stroke="#9333ea" stroke-width=".7"/></g><rect x="15.5" y="21" width="15" height="15" rx="3" fill="#090912" stroke="#7e22ce"/><polygon points="21,25 25,25 24,36 22,36" fill="#581c87"/><circle cx="23" cy="13.5" r="9" fill="#090912" stroke="#7e22ce" stroke-width="1.2"/><path d="M15 20Q23 23 31 20L30 23Q23 26 16 23Z" fill="#581c87" stroke="#a855f7" stroke-width=".6"/><path d="M24 12L28.5 14L31.5 12M28.5 14V18.5" fill="none" stroke="#e879f9" stroke-width="1.8" stroke-linecap="round"/><path d="M14 12.5A9 9 0 0 1 32 12.5" fill="none" stroke="#1e1b4b" stroke-width="2.6"/><circle cx="21" cy="14.5" r="3.8" fill="#090910" stroke="#c084fc" stroke-width="1.2"/><polygon points="21,12.2 22.5,14.5 21,16.8 19.5,14.5" fill="#e879f9"/><g class="ll"><rect x="20.5" y="34" width="4.5" height="11" rx="1.5" fill="#312e81" stroke="#c084fc" stroke-width=".7"/></g><g class="al"><rect x="20.5" y="22.5" width="4.5" height="9" rx="2" fill="#1e1b4b" stroke="#a855f7" stroke-width=".8"/></g></g></svg>
+<div class="neon" id="nb"><div class="bar"><div class="info"><span>Nothing to me...</span><button id="lb" class="btn" onclick="tg()">🔁 Boucle : ON</button></div><audio id="pl" controls><source src="episode2.mp3.mp3" type="audio/mpeg"></audio></div></div>
+</div><script>
+let lp=true;const pl=document.getElementById('pl'),lb=document.getElementById('lb'),nb=document.getElementById('nb'),st=document.getElementById('st');
+function tg(){lp=!lp;lb.innerText=lp?'🔁 Boucle : ON':'🔁 Boucle : OFF';lb.classList.toggle('off',!lp)}
+pl.onplay=()=>{nb.classList.add('play');st.classList.add('play')};pl.onpause=()=>{nb.classList.remove('play');st.classList.remove('play')};
+pl.onended=()=>{if(lp){pl.currentTime=0;pl.play()}else{nb.classList.remove('play');st.classList.remove('play')}};
+</script></body></html>
