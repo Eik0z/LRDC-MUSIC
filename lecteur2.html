@@ -1,82 +1,101 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>La Reine des Cendres — Lecteur audio</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La Reine des Cendres • Lecteur Obsidia / ROXOR</title>
 <style>
-:root{color-scheme:dark;--pink:#f783d6;--blue:#8bdcff;--text:#f7edff}
+:root{color-scheme:dark;--pink:#ff63bc;--purple:#a977ff;--blue:#6edfff}
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;width:100%;background:transparent!important;color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-body{overflow-x:hidden}
-.player{width:min(100%,510px);margin:0 auto;position:relative;overflow:hidden;padding:17px 20px 15px;border-radius:17px;border:1px solid #a16bc6;background:linear-gradient(135deg,#241331 0%,#111124 55%,#1b122b 100%);box-shadow:inset 0 0 24px #a13fc719}
-/* Tous les effets lumineux restent dans le lecteur. Aucun halo externe, aucune projection. */
-.player::before{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:linear-gradient(100deg,#ff85d50c,transparent 40%,#77ceff0d)}
-.top,.transport,.foot,.seekrow{position:relative;z-index:1}
-.top{display:flex;align-items:center;gap:11px;margin-bottom:13px}
-.emblem{width:45px;height:45px;flex:none;border-radius:13px;display:grid;place-items:center;border:1px solid #b47fea;background:linear-gradient(150deg,#5a296e,#241c4c);box-shadow:inset 0 0 12px #cf77fb3d}
-.emblem svg{width:27px;height:27px;fill:none;stroke:#f4c6fa;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.names{min-width:0;flex:1}.eyebrow{color:#bdb1da;text-transform:uppercase;letter-spacing:.17em;font-size:9px;margin-bottom:2px}
-h1{font:500 clamp(15px,4.8vw,21px)/1.14 Georgia,"Times New Roman",serif;letter-spacing:.06em;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.subtitle{margin:4px 0 0;color:#d4bddc;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.transport{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:13px}
-button{appearance:none;cursor:pointer;display:grid;place-items:center;flex:none;color:#fbe9ff;touch-action:manipulation}
-.btn{height:38px;width:38px;border-radius:11px;border:1px solid #80649d;background:#30203e;transition:background .16s,border-color .16s,transform .16s}
-.btn:hover{background:#492853;border-color:#e0a4ff}.btn:active{transform:scale(.94)}
-.btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.play{height:54px;width:54px;border-radius:50%;background:linear-gradient(145deg,#ba6cb9,#5a296d);border:1px solid #ffc5f1;box-shadow:inset 0 0 12px #f3b2ee36}
-.play:hover{background:linear-gradient(145deg,#d280c8,#71347e)}.play svg{fill:currentColor;stroke:none;width:25px;height:25px}
-.loop.on{color:#ffd3f2;border-color:var(--pink)}
-.seekrow{display:flex;align-items:center;gap:9px;margin-bottom:12px}
-.time{font-size:10px;color:#d9cae4;min-width:30px;font-variant-numeric:tabular-nums}.time:last-child{text-align:right}
-input[type="range"]{appearance:none;-webkit-appearance:none;cursor:pointer;border:0;outline-offset:4px}
-#seek{width:100%;min-width:0;height:6px;border-radius:10px;background:linear-gradient(90deg,#e77ed4 var(--pct,0%),#41304d var(--pct,0%))}
-input[type=range]::-webkit-slider-thumb{appearance:none;width:13px;height:13px;border-radius:50%;background:#f7d8fd;border:2px solid #bd83e2}
-input[type=range]::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:#f7d8fd;border:2px solid #bd83e2}
-.foot{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.volume{display:flex;align-items:center;gap:8px;color:#b9a6cd}
-.volume svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7}
-#volume{width:80px;height:4px;border-radius:10px;background:linear-gradient(90deg,#b58ae4 var(--pct,80%),#483451 var(--pct,80%))}
-#volume::-webkit-slider-thumb{width:10px;height:10px;border:none;background:#e8bbff}
-#volume::-moz-range-thumb{width:10px;height:10px;border:none;background:#e8bbff}
-.status{color:#bfb5d8;font-size:9px;letter-spacing:.05em;text-align:right}
-.status::before{content:"";display:inline-block;width:5px;height:5px;vertical-align:middle;margin-right:6px;border-radius:50%;background:var(--blue);box-shadow:0 0 5px var(--blue)}
-button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
-@media(max-width:360px){.player{border-radius:12px;padding:13px 12px 12px}.eyebrow{font-size:8px}.transport{margin-bottom:11px}.top{margin-bottom:10px}.volume #volume{width:50px}.status{font-size:8px}}
+html,body{margin:0;width:100%;min-height:100%;background:#000!important;color:#f8f0ff;font-family:Segoe UI,Arial,sans-serif}
+body{padding:10px 8px 14px;overflow-x:hidden}
+.player{width:min(100%,850px);margin:0 auto;border-radius:15px;background:#030209;filter:drop-shadow(0 0 10px #8a43cf55)}
+.duel{width:100%;aspect-ratio:2146/652;position:relative;overflow:hidden;isolation:isolate;background:#03010b;border:1px solid #704a9e;border-bottom:0;border-radius:15px 15px 0 0}
+.scene{position:absolute;inset:-1%;background:url('duel-obsidia-v3.webp') center/100% 100% no-repeat;will-change:transform;animation:sceneBreath 10s ease-in-out infinite alternate}
+.duel::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:8;background:linear-gradient(0deg,#05021025,transparent 22%),linear-gradient(100deg,#26002e27,transparent 40%,#33092313 75%,transparent);}
+#particles{position:absolute;inset:0;z-index:6;width:100%;height:100%;pointer-events:none}
+.impact-aura{position:absolute;left:50.2%;top:41%;width:20%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#fff7 0%,#f59dff44 11%,#8fc8ff21 28%,transparent 70%);mix-blend-mode:screen;z-index:3;animation:aura 3.9s ease-in-out infinite}
+.bolt{position:absolute;left:50.2%;top:40%;width:27%;height:2px;z-index:4;transform-origin:50% 50%;background:linear-gradient(90deg,transparent,#85dfff,#fff,#f68bd6,transparent);opacity:0;box-shadow:0 0 9px #edafff,0 0 19px #a4dfff;animation:bolt 5s ease-in-out infinite}
+.bolt.b2{transform:translate(-50%,-50%) rotate(-39deg);animation-delay:.17s}
+.bolt.b3{transform:translate(-50%,-50%) rotate(26deg);animation-delay:.27s}
+.wave{position:absolute;left:50.2%;top:40%;width:8%;aspect-ratio:1;border:1px solid #e2beff;border-radius:50%;z-index:5;opacity:0;box-shadow:0 0 7px #eb9cff,0 0 10px #74d5ff inset;animation:wave 5s ease-out infinite}
+.wave.w2{animation-delay:.18s}
+.flash{position:absolute;inset:0;z-index:7;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 50.2% 41%,#fff9 0%,#f7a8ff3a 12%,transparent 44%);mix-blend-mode:screen;animation:flash 5s infinite}
+.lightbeam{position:absolute;inset:-25% -50%;z-index:2;pointer-events:none;background:linear-gradient(100deg,transparent 45%,#8cdcff0d 48%,#f6b9ff20 50%,transparent 54%);transform:translateX(-35%);animation:beam 12s linear infinite;mix-blend-mode:screen}
+.deck{position:relative;overflow:hidden;padding:12px 20px 15px;background:linear-gradient(115deg,#0d0717,#0c0b20 64%,#060b16);border:1px solid #a365e4;border-top:2px solid #ee5da8;border-radius:0 0 15px 15px;box-shadow:inset 0 0 24px #71368a44,0 0 16px #7d3fc044}
+.deck::before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(95deg,transparent 25%,#a969ff18 45%,#7ddcff1a 52%,transparent 73%);background-size:200% 100%;animation:beam 10s linear infinite}
+.brand{position:relative;margin:0;text-align:center;font:600 clamp(15px,2.8vw,22px) Georgia,serif;letter-spacing:.14em;text-shadow:0 0 10px #cc4dff,0 0 20px #8f3fff}
+.track{position:relative;text-align:center;margin:3px 0 7px;font-size:11px;letter-spacing:.08em;color:#d5bfec}
+.controls{position:relative;display:flex;align-items:center;justify-content:center;gap:10px;margin:0 0 8px}
+button{font:inherit;color:white;cursor:pointer;touch-action:manipulation}
+.iconbtn{height:32px;min-width:34px;display:grid;place-items:center;border:1px solid #76629d;border-radius:9px;background:#19142e;font-size:20px}
+.iconbtn:hover,.iconbtn:focus-visible,.play:hover,.play:focus-visible{outline:2px solid #6fddff;outline-offset:2px}
+.iconbtn.active{border-color:#ff79c5;background:#61204e;box-shadow:0 0 10px #f94dbd88,inset 0 0 9px #d14aa844}
+.play{width:45px;height:45px;display:grid;place-items:center;padding:0;border:2px solid #ff89d3;border-radius:50%;font-size:21px;background:radial-gradient(circle,#75206c,#190d2c);box-shadow:0 0 14px #ff61b6aa}
+.timeline{position:relative;display:flex;align-items:center;gap:9px}
+.timeline span{width:37px;flex-shrink:0;color:#e5dded;font-size:11px;text-align:center;font-variant-numeric:tabular-nums}
+input[type=range]{min-width:0;cursor:pointer;accent-color:#b879fa}
+#seek{flex:1;width:100%;height:16px}
+.bottom{position:relative;margin-top:3px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.volume{display:flex;gap:7px;align-items:center;font-size:12px}#volume{width:95px}
+.status{font-size:10px;color:#bfcae7;letter-spacing:.03em}.dot{display:inline-block;width:6px;height:6px;margin-right:6px;border-radius:50%;background:#b37aff;box-shadow:0 0 9px #bd78ff}
+@keyframes sceneBreath{0%{transform:translate(-.4%,.1%) scale(1.014)}44%{transform:translate(.3%,-.15%) scale(1.025)}53%{transform:translate(-.15%,.05%) scale(1.031)}100%{transform:translate(.2%,-.1%) scale(1.016)}}
+@keyframes aura{0%,65%,100%{opacity:.17;transform:translate(-50%,-50%) scale(.7)}69%{opacity:.8;transform:translate(-50%,-50%) scale(1.15)}81%{opacity:.26;transform:translate(-50%,-50%) scale(.9)}}
+@keyframes bolt{0%,61%,100%{opacity:0;transform:translate(-50%,-50%) rotate(-23deg) scaleX(.15)}66%{opacity:.85;transform:translate(-50%,-50%) rotate(-23deg) scaleX(1)}75%{opacity:0;transform:translate(-50%,-50%) rotate(-23deg) scaleX(1.5)}}
+@keyframes wave{0%,64%,100%{opacity:0;transform:translate(-50%,-50%) scale(.2)}69%{opacity:.9}84%{opacity:0;transform:translate(-50%,-50%) scale(4.3)}}
+@keyframes flash{0%,62%,100%{opacity:0}68%{opacity:.62}74%{opacity:.08}77%{opacity:.21}82%{opacity:0}}
+@keyframes beam{to{transform:translateX(35%);background-position:200% 0}}
+@media(max-width:620px){body{padding:6px 4px 10px}.deck{padding:10px 10px 12px}.brand{letter-spacing:.06em}.bottom{justify-content:center;gap:6px}.status{width:100%;text-align:center}.duel{border-radius:10px 10px 0 0}.player{border-radius:10px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <main class="player" aria-label="Lecteur audio La Reine des Cendres">
-  <div class="top">
-    <div class="emblem" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 4v24M4 16h24M7.5 7.5l17 17m0-17-17 17"/><path d="M16 4c3 5 4 8 0 12-4-4-3-7 0-12zm12 12c-5 3-8 4-12 0 4-4 7-3 12 0zM16 28c-3-5-4-8 0-12 4 4 3 7 0 12zM4 16c5-3 8-4 12 0-4 4-7 3-12 0z"/></svg></div>
-    <div class="names"><div class="eyebrow">OBSIDIA · BANDE ORIGINALE</div><h1>LA REINE DES CENDRES</h1><p class="subtitle">Nothing to me...</p></div>
-  </div>
-  <div class="transport">
-    <button class="btn" id="restart" title="Recommencer" aria-label="Recommencer le morceau"><svg viewBox="0 0 24 24"><path d="M19 20V4M16 5 6 12l10 7V5Z"/></svg></button>
-    <button class="btn play" id="play" title="Lecture" aria-label="Lire la musique"><svg id="playIcon" viewBox="0 0 24 24"><path d="M8 4.5 20 12 8 19.5Z"/></svg></button>
-    <button class="btn loop on" id="loop" aria-label="Désactiver la boucle" aria-pressed="true" title="Boucle activée"><svg viewBox="0 0 24 24"><path d="m17 2 4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4m14-1v2a3 3 0 0 1-3 3H3"/></svg></button>
-  </div>
-  <div class="seekrow"><span class="time" id="elapsed">0:00</span><input type="range" id="seek" min="0" max="1000" step="1" value="0" aria-label="Position dans la musique"><span class="time" id="duration">0:00</span></div>
-  <div class="foot"><label class="volume"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5Zm4 4a5 5 0 0 1 0 6m3-9a9 9 0 0 1 0 12"/></svg><input type="range" id="volume" min="0" max="100" value="80" aria-label="Volume sonore"></label><span class="status" id="status" role="status">PRÊT · BOUCLE ACTIVE</span></div>
-  <audio id="audio" preload="metadata" loop src="episode2.mp3.mp3"></audio>
+  <section class="duel" role="img" aria-label="Eiko et Aren s'affrontent à Obsidia. Drapeau d'Obsidia à gauche, drapeau de ROXOR à droite.">
+    <div class="scene"></div><div class="lightbeam"></div><div class="impact-aura"></div>
+    <div class="bolt"></div><div class="bolt b2"></div><div class="bolt b3"></div>
+    <div class="wave"></div><div class="wave w2"></div><div class="flash"></div>
+    <canvas id="particles" aria-hidden="true"></canvas>
+  </section>
+  <section class="deck">
+    <h1 class="brand">LA REINE DES CENDRES</h1>
+    <div class="track">Nothing to me...</div>
+    <div class="controls">
+      <button class="iconbtn" id="restart" type="button" aria-label="Recommencer le morceau" title="Recommencer">⏮</button>
+      <button class="play" id="play" type="button" aria-label="Lecture" title="Lecture">▶</button>
+      <button class="iconbtn active" id="loop" type="button" aria-pressed="true" aria-label="Boucle activée" title="Boucle activée">↻</button>
+    </div>
+    <div class="timeline"><span id="current">0:00</span><input id="seek" type="range" min="0" max="1000" value="0" aria-label="Progression du morceau"><span id="duration">0:00</span></div>
+    <div class="bottom"><div class="volume"><span aria-hidden="true">🔊</span><input id="volume" type="range" min="0" max="100" value="80" aria-label="Volume"></div>
+      <div class="status" role="status"><span class="dot"></span><span id="state">PRÊT À ÉCOUTER · BOUCLE ACTIVE</span></div></div>
+    <audio id="audio" preload="metadata" loop src="episode2.mp3.mp3"></audio>
+  </section>
 </main>
 <script>
 (()=>{
-const $=id=>document.getElementById(id),a=$('audio'),play=$('play'),loop=$('loop'),seek=$('seek'),volume=$('volume'),status=$('status');
-a.volume=.8;a.loop=true;
-const fmt=t=>Number.isFinite(t)?`${Math.floor(t/60)}:${String(Math.floor(t%60)).padStart(2,'0')}`:'0:00';
-function progress(){ $('elapsed').textContent=fmt(a.currentTime);$('duration').textContent=fmt(a.duration);if(!seek.matches(':active')){seek.value=a.duration?Math.round(a.currentTime/a.duration*1000):0;seek.style.setProperty('--pct',(Number(seek.value)/10)+'%')} }
-function sync(){const playing=!a.paused;$('playIcon').innerHTML=playing?'<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>':'<path d="M8 4.5 20 12 8 19.5Z"/>';play.setAttribute('aria-label',playing?'Mettre en pause':'Lire la musique');status.textContent=(playing?'EN LECTURE':'PRÊT')+' · '+(a.loop?'BOUCLE ACTIVE':'BOUCLE DÉSACTIVÉE')}
-play.addEventListener('click',async()=>{if(a.paused){try{await a.play()}catch(e){status.textContent='ERREUR · VÉRIFIER LE MP3';return}}else a.pause();sync()});
-$('restart').addEventListener('click',()=>{a.currentTime=0;progress()});
-loop.addEventListener('click',()=>{a.loop=!a.loop;loop.classList.toggle('on',a.loop);loop.setAttribute('aria-pressed',String(a.loop));loop.setAttribute('aria-label',a.loop?'Désactiver la boucle':'Activer la boucle');sync()});
-seek.addEventListener('input',()=>{seek.style.setProperty('--pct',(Number(seek.value)/10)+'%');if(a.duration)a.currentTime=Number(seek.value)/1000*a.duration});
-volume.addEventListener('input',()=>{a.volume=Number(volume.value)/100;volume.style.setProperty('--pct',volume.value+'%')});volume.style.setProperty('--pct','80%');
-for(const event of ['timeupdate','loadedmetadata','durationchange','seeked'])a.addEventListener(event,progress);
-for(const event of ['play','pause','ended'])a.addEventListener(event,sync);
-a.addEventListener('error',()=>{status.textContent='MP3 INTROUVABLE'});
-progress();sync();
+ const audio=document.getElementById('audio'),play=document.getElementById('play'),loop=document.getElementById('loop'),restart=document.getElementById('restart'),seek=document.getElementById('seek'),volume=document.getElementById('volume'),current=document.getElementById('current'),duration=document.getElementById('duration'),state=document.getElementById('state');
+ audio.volume=.8;audio.loop=true;
+ const fmt=t=>Number.isFinite(t)?`${Math.floor(t/60)}:${String(Math.floor(t%60)).padStart(2,'0')}`:'0:00';
+ const update=()=>{current.textContent=fmt(audio.currentTime);duration.textContent=fmt(audio.duration);if(!seek.matches(':active'))seek.value=Number.isFinite(audio.duration)&&audio.duration>0?Math.round(audio.currentTime/audio.duration*1000):0};
+ const sync=()=>{let playing=!audio.paused;play.textContent=playing?'Ⅱ':'▶';play.setAttribute('aria-label',playing?'Pause':'Lecture');play.title=playing?'Pause':'Lecture';state.textContent=(playing?'LECTURE EN COURS':'PRÊT À ÉCOUTER')+' · '+(audio.loop?'BOUCLE ACTIVE':'BOUCLE DÉSACTIVÉE')};
+ play.addEventListener('click',async()=>{if(audio.paused){try{await audio.play()}catch(e){state.textContent='IMPOSSIBLE DE LIRE LA MUSIQUE'}}else audio.pause();sync()});
+ restart.addEventListener('click',()=>{audio.currentTime=0;update()});
+ loop.addEventListener('click',()=>{audio.loop=!audio.loop;loop.classList.toggle('active',audio.loop);loop.setAttribute('aria-pressed',String(audio.loop));loop.setAttribute('aria-label',audio.loop?'Boucle activée':'Boucle désactivée');loop.title=audio.loop?'Boucle activée':'Boucle désactivée';sync()});
+ volume.addEventListener('input',()=>audio.volume=Number(volume.value)/100);
+ seek.addEventListener('input',()=>{if(Number.isFinite(audio.duration)&&audio.duration>0)audio.currentTime=Number(seek.value)/1000*audio.duration;update()});
+ ['timeupdate','loadedmetadata','durationchange','seeked'].forEach(e=>audio.addEventListener(e,update));
+ ['play','pause','ended'].forEach(e=>audio.addEventListener(e,sync));
+ audio.addEventListener('error',()=>state.textContent='FICHIER AUDIO INTROUVABLE OU NON LISIBLE');update();sync();
+ // Particules d'énergie et pluie d'étincelles avec mouvements continus.
+ const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');
+ const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ if(!reduced && ctx){let w=0,h=0,last=0,parts=[],lastBurst=-10000;const rand=(a,b)=>a+Math.random()*(b-a);
+ const resize=()=>{const r=canvas.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);w=r.width;h=r.height;canvas.width=Math.round(w*d);canvas.height=Math.round(h*d);ctx.setTransform(d,0,0,d,0,0)};
+ const spawn=(burst=false)=>{const x=burst?w*.502:rand(0,w),y=burst?h*.41:rand(h*.12,h*.9),ang=rand(0,Math.PI*2),speed=burst?rand(40,150):rand(3,18);parts.push({x,y,vx:Math.cos(ang)*speed,vy:Math.sin(ang)*speed-(burst?0:8),size:burst?rand(.7,2.1):rand(.5,1.25),age:0,life:burst?rand(.35,1.15):rand(2,6),color:Math.random()<.45?'255,179,237':Math.random()<.5?'126,208,255':'255,235,197'});if(parts.length>190)parts.shift()};
+ function frame(t){if(!last)last=t;const dt=Math.min((t-last)/1000,.045);last=t;ctx.clearRect(0,0,w,h);
+ if(Math.random()<.8)spawn();if(t-lastBurst>5000){lastBurst=t;for(let i=0;i<42;i++)spawn(true)}
+ for(let i=parts.length-1;i>=0;i--){const p=parts[i];p.age+=dt;if(p.age>p.life){parts.splice(i,1);continue}p.x+=p.vx*dt;p.y+=p.vy*dt;if(p.life<1.5)p.vy+=105*dt;let a=(1-p.age/p.life)*.82;ctx.fillStyle=`rgba(${p.color},${a})`;ctx.shadowColor=`rgba(${p.color},${a})`;ctx.shadowBlur=p.life<1.5?8:4;ctx.fillRect(p.x,p.y,p.size,p.size*1.8)}ctx.shadowBlur=0;requestAnimationFrame(frame)}
+ resize();window.addEventListener('resize',resize);requestAnimationFrame(frame);
+ }
 })();
 </script>
-</body>
-</html>
+</body></html>
