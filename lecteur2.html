@@ -14,7 +14,6 @@ main{position:relative;width:min(100%,1120px);margin:auto;isolation:isolate;back
 .art{position:relative;width:100%;aspect-ratio:2048/682;overflow:hidden;background:#050411}
 .art>img{display:block;width:100%;height:100%;object-fit:contain}
 .art::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#08061380,transparent 25%),linear-gradient(100deg,#6e2ad70d,transparent 50%,#f044ba12);pointer-events:none}
-.art::before{content:"";position:absolute;inset:-100% -65%;z-index:2;pointer-events:none;opacity:.35;background:linear-gradient(105deg,transparent 42%,#73dafa16 49%,#fff6 50%,#dd4fff18 51%,transparent 58%);transform:translateX(-60%) rotate(4deg);animation:glint 14s ease-in-out infinite}
 .sparks{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:5;mix-blend-mode:screen}
 .impact{position:absolute;left:53.1%;top:39.3%;width:13%;aspect-ratio:1;transform:translate(-50%,-50%);background:radial-gradient(circle,#fff 0%,#fff6ddab 6%,#ff75d67a 17%,#7b87ff38 39%,transparent 72%);mix-blend-mode:screen;animation:impact 4.2s ease-in-out infinite;pointer-events:none;z-index:3;filter:blur(1px)}
 .impact::after{content:"";position:absolute;inset:-45%;border-radius:50%;background:conic-gradient(from 10deg,transparent 0 10%,#b5f4ff55 12%,transparent 14% 35%,#ff93ed6e 38%,transparent 40% 64%,#fff6 68%,transparent 70%);animation:impactSpin 4.2s linear infinite;opacity:0}
@@ -53,7 +52,6 @@ input[type=range]::-moz-range-thumb{width:11px;height:11px;border-radius:50%;bac
 .status::before{content:"";display:inline-block;width:5px;height:5px;border-radius:100%;background:#66dafa;box-shadow:0 0 8px #56cfff;vertical-align:middle;margin-right:7px}
 body.playing .panel::before{filter:drop-shadow(0 0 6px #f972df)}
 @keyframes borderflow{to{background-position:300% 0}}
-@keyframes glint{0%,70%,100%{transform:translateX(-70%) rotate(4deg);opacity:0}78%{opacity:.32}91%{transform:translateX(65%) rotate(4deg);opacity:0}}
 @keyframes impact{0%,13%,39%,100%{opacity:.12;transform:translate(-50%,-50%) scale(.7)}20%{opacity:.95;transform:translate(-50%,-50%) scale(1.35)}30%{opacity:.65;transform:translate(-50%,-50%) scale(1.9)}}
 @keyframes impactSpin{0%,13%,100%{opacity:0;transform:rotate(0deg)}20%{opacity:.65;transform:rotate(65deg)}40%{opacity:0;transform:rotate(130deg)}}
 @keyframes flower{0%,100%{opacity:.3;transform:translate(-50%,-50%) scale(.8)}50%{opacity:.85;transform:translate(-50%,-50%) scale(1.2)}}
