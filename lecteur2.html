@@ -2,111 +2,121 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>La Reine des Cendres — Lecteur Obsidia / ROXOR</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#05040b">
+<title>La Reine des Cendres — Lecteur Obsidia</title>
 <style>
-:root{color-scheme:dark;--violet:#ae7bff;--pink:#ff69c5;--ice:#89dfff}
-*{box-sizing:border-box}
-html,body{margin:0;width:100%;background:#000;color:#f8eeff;font-family:Segoe UI,Arial,sans-serif}
-body{padding:4px;overflow-x:hidden}
-.player{width:100%;max-width:1160px;margin:0 auto;display:flex;flex-direction:column;background:#090615;border:1px solid #9456cb;border-radius:14px;overflow:hidden;isolation:isolate;box-shadow:0 0 12px #9951da6e,inset 0 0 18px #6b228c2b}
-.art{position:relative;width:100%;height:clamp(110px,16vw,175px);background:#04030b;border-bottom:1px solid #8044be;overflow:hidden;flex:none}
-.art img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;background:#03020a;animation:breath 9s ease-in-out infinite alternate}
-.art::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#4b08701a,transparent 35%,#380c6518),linear-gradient(0deg,#02010663,transparent 45%);pointer-events:none}
-.art .glow{position:absolute;width:14%;aspect-ratio:1;top:48%;left:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#fff9 0%,#fda7fc7a 8%,#5cb0ff36 23%,transparent 70%);mix-blend-mode:screen;animation:charge 4.7s infinite;pointer-events:none}
-.art .ring{position:absolute;top:48%;left:50%;width:4%;aspect-ratio:1;border:1px solid #f2ceff;border-radius:50%;box-shadow:0 0 8px #cf83ff;animation:ring 4.7s infinite;pointer-events:none}
-.art canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.interface{position:relative;padding:12px clamp(12px,3vw,30px) 10px;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:'heading transport' 'progress progress' 'footer footer';gap:8px 22px;background:radial-gradient(ellipse at top right,#5c155147,transparent 58%),linear-gradient(120deg,#10091e,#090d1b)}
-.interface::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,transparent 38%,#ad7bff12 50%,transparent 64%);background-size:220% 100%;animation:sweep 11s linear infinite}
-.heading,.transport,.progress,.footer{position:relative;z-index:1;min-width:0}
-.heading{grid-area:heading;align-self:center}
-.title-wrap{min-width:0}
-h1{font:600 clamp(13px,1.7vw,19px) Georgia,serif;letter-spacing:.07em;margin:0;text-shadow:0 0 9px #ba69fe;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.subtitle{margin-top:3px;color:#cbbbe8;font-size:11px}
-.transport{grid-area:transport;display:flex;align-items:center;justify-content:center;gap:12px}
-button{cursor:pointer;color:#fff;font-family:inherit;touch-action:manipulation}
-.button{height:35px;min-width:42px;border:1px solid #8864ad;border-radius:8px;background:#251536;font-size:19px;display:grid;place-items:center}
-.button.on{border-color:var(--pink);background:#572154;box-shadow:0 0 11px #f46bcd88}
-.button.play{height:42px;min-width:49px;border:1px solid #ff85d3;border-radius:100px;background:linear-gradient(130deg,#7d276e,#281942);font-size:22px;box-shadow:0 0 12px #e85cbb88}
-button:focus-visible,input:focus-visible{outline:2px solid var(--ice);outline-offset:2px}
-.progress{grid-area:progress;display:flex;gap:10px;align-items:center}
-.time{width:36px;text-align:center;font-size:11px;font-variant-numeric:tabular-nums;color:#e4dff0;flex-shrink:0}
-input[type=range]{min-width:0;accent-color:#d379ff;cursor:pointer}
-#seek{flex:1;width:100%;height:18px}
-.footer{grid-area:footer;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:22px}
-.volume{display:flex;align-items:center;gap:6px;color:#ddd2ed;font-size:12px}
-#volume{width:90px}
-.status{color:#b8a9d2;font-size:10px;letter-spacing:.035em;text-align:right}
-.status::before{content:"";display:inline-block;width:5px;height:5px;background:#a56bff;border-radius:50%;box-shadow:0 0 7px #cf76ff;margin-right:6px;vertical-align:middle}
-@keyframes breath{from{transform:scale(1)}to{transform:scale(1.03)}}
-@keyframes charge{0%,58%,100%{opacity:.1;transform:translate(-50%,-50%) scale(.6)}66%{opacity:.85;transform:translate(-50%,-50%) scale(1.3)}75%{opacity:.12;transform:translate(-50%,-50%) scale(1)}}
-@keyframes ring{0%,59%,100%{opacity:0;transform:translate(-50%,-50%) scale(.3)}66%{opacity:1}80%{opacity:0;transform:translate(-50%,-50%) scale(5)}}
-@keyframes sweep{to{background-position:220% 0}}
-/* Une seule mise en page : image en haut, commandes dessous, sur TOUS les écrans. */
-@media(max-width:600px){
- body{padding:3px}
- .player{border-radius:11px}
- .art{height:auto;aspect-ratio:2146/652;min-height:0;max-height:150px}
- .art img{height:100%;object-fit:contain}
- .interface{display:flex;flex-direction:column;align-items:stretch;gap:9px;padding:11px 12px 13px}
- .heading{text-align:center}
- h1{font-size:clamp(13px,3.8vw,17px);letter-spacing:.035em}
- .subtitle{font-size:11px}
- .transport{gap:18px}
- .button{height:38px;min-width:44px}
- .button.play{height:46px;min-width:54px}
- .progress{gap:6px}
- .time{width:33px;font-size:10px}
- .footer{justify-content:center;min-height:15px}
- .volume{display:none}
- .status{text-align:center;font-size:10px}
-}
-@media(max-width:340px){.interface{padding:10px 8px;gap:8px}.transport{gap:14px}h1{font-size:12px}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important}}
+:root{color-scheme:dark;--pink:#ff59bd;--purple:#b779ff;--blue:#56cfff;--ink:#07050d;--white:#f8f0ff}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;min-height:100%;width:100%;background:#000;color:var(--white);font:14px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif}
+body{padding:11px 10px 15px;overflow-x:hidden}
+button,input{font:inherit}
+main{position:relative;width:min(100%,1050px);margin:auto;isolation:isolate}
+/* All effects remain INSIDE the player, so Google Sites never needs extra space above it. */
+.aura{position:absolute;inset:-2px;z-index:-1;border-radius:19px;background:linear-gradient(110deg,#15bfff,#ff4db6,#8d53ff,#3af3ff,#ff4db6);background-size:300% 100%;animation:borderflow 10s linear infinite;filter:drop-shadow(0 0 12px #d240db77)}
+.shell{position:relative;overflow:hidden;border:1px solid #b78afd80;border-radius:17px;background:#04030a;box-shadow:0 16px 40px #000b,0 0 25px #792b9d55,inset 0 0 25px #381e6855}
+.art{position:relative;width:100%;aspect-ratio:2048/682;overflow:hidden;background:#050411}
+.art>img{display:block;width:100%;height:100%;object-fit:contain}
+.art::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#08061380,transparent 25%),linear-gradient(100deg,#6e2ad70d,transparent 50%,#f044ba12);pointer-events:none}
+.art::before{content:"";position:absolute;inset:-100% -65%;z-index:2;pointer-events:none;opacity:.35;background:linear-gradient(105deg,transparent 42%,#73dafa16 49%,#fff6 50%,#dd4fff18 51%,transparent 58%);transform:translateX(-60%) rotate(4deg);animation:glint 14s ease-in-out infinite}
+.sparks{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:4}
+.impact{position:absolute;left:53%;top:38%;width:13%;aspect-ratio:1;transform:translate(-50%,-50%);background:radial-gradient(circle,#fff9 0%,#ffb8e87a 8%,#da6aff26 30%,transparent 70%);mix-blend-mode:screen;animation:impact 5.4s ease-in-out infinite;pointer-events:none;z-index:3}
+.flower{position:absolute;left:50%;top:82%;width:16%;aspect-ratio:1;transform:translate(-50%,-50%);background:radial-gradient(circle,#99ebff5c 0%,#1bbcff2f 26%,transparent 65%);mix-blend-mode:screen;animation:flower 4s ease-in-out infinite;pointer-events:none;z-index:3}
+.rune{position:absolute;left:50%;bottom:4%;width:26%;height:1px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,#8feeff,transparent);box-shadow:0 0 13px #2ebfff;animation:rune 4s infinite;pointer-events:none;z-index:4}
+.panel{position:relative;display:grid;grid-template-columns:minmax(170px,1fr) auto;grid-template-areas:"heading controls" "progress progress" "foot foot";column-gap:18px;row-gap:11px;padding:17px 24px 16px;background:radial-gradient(ellipse at 50% -70%,#76216b70,transparent 68%),linear-gradient(115deg,#120b21,#080b18 52%,#1c0b22);border-top:1px solid #e46df28a}
+.panel::before{content:"";position:absolute;top:0;left:12%;right:12%;height:2px;background:linear-gradient(90deg,transparent,var(--pink),#b778ff,var(--blue),transparent);filter:blur(1px);opacity:.75}
+.heading{grid-area:heading;align-self:center;min-width:0}
+.kicker{font-size:9px;letter-spacing:.26em;color:#a7a6d1;text-transform:uppercase;margin-bottom:3px}
+h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(15px,2vw,22px);letter-spacing:.105em;font-weight:500;margin:0;text-shadow:0 0 14px #bf72ff90;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track{font-size:11px;color:#c6afd8;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.controls{grid-area:controls;display:flex;align-items:center;gap:9px;justify-content:end}
+button{color:#f8e9ff;cursor:pointer;display:grid;place-items:center;flex:none;touch-action:manipulation}
+.ctrl{width:41px;height:41px;border:1px solid #976abc85;border-radius:12px;background:linear-gradient(135deg,#301841,#150d29);box-shadow:inset 0 1px 0 #fff1,0 2px 12px #0006;transition:transform .18s,border-color .18s,box-shadow .18s}
+.ctrl:hover{transform:translateY(-2px);border-color:#eeb5ff;box-shadow:0 0 18px #ac62ff55}
+.ctrl:active{transform:scale(.94)}
+.ctrl svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ctrl.primary{height:52px;width:52px;border-radius:50%;color:white;background:radial-gradient(circle at 32% 25%,#aa53b0,#511e67 60%,#1b1241);border:1px solid #ff9cda;box-shadow:0 0 0 4px #e962c11b,0 0 20px #f35bb778,inset 0 1px 0 #fff4}
+.ctrl.primary svg{width:24px;height:24px;fill:currentColor;stroke:none}
+.ctrl.is-on{color:#ffb8ec;border-color:#fb6bc7;box-shadow:0 0 15px #f35bb76e,inset 0 0 12px #c2359660}
+.ctrl.is-on svg{filter:drop-shadow(0 0 5px #ff70cd)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.progress{grid-area:progress;display:flex;align-items:center;gap:12px;min-width:0}
+.time{font-size:11px;color:#d3c6e3;font-variant-numeric:tabular-nums;min-width:35px;text-align:center}
+input[type=range]{--percent:0%;appearance:none;-webkit-appearance:none;cursor:pointer;border:0;outline-offset:5px}
+#seek{width:100%;min-width:0;height:6px;border-radius:99px;background:linear-gradient(90deg,#ff67c2 0%,#9368fe var(--percent),#42304f var(--percent),#292336 100%);box-shadow:0 0 6px #b45aff52}
+input[type=range]::-webkit-slider-thumb{appearance:none;width:14px;height:14px;border-radius:50%;background:#f5d5ff;border:2px solid #bc86ff;box-shadow:0 0 12px #d680ff}
+input[type=range]::-moz-range-thumb{width:11px;height:11px;border-radius:50%;background:#f5d5ff;border:2px solid #bc86ff;box-shadow:0 0 12px #d680ff}
+.foot{grid-area:foot;display:flex;justify-content:space-between;align-items:center;gap:10px;min-width:0}
+.vol{display:flex;align-items:center;gap:10px;color:#c9addf}
+.vol svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}
+#volume{height:4px;width:84px;border-radius:20px;background:linear-gradient(90deg,#ca87ff 0%,#ca87ff var(--percent),#3b3150 var(--percent))}
+#volume::-webkit-slider-thumb{width:11px;height:11px;border-width:1px}
+#volume::-moz-range-thumb{width:9px;height:9px;border-width:1px}
+.status{font-size:10px;color:#b9add4;letter-spacing:.07em;text-align:right;min-width:0}
+.status::before{content:"";display:inline-block;width:5px;height:5px;border-radius:100%;background:#66dafa;box-shadow:0 0 8px #56cfff;vertical-align:middle;margin-right:7px}
+body.playing .aura{animation-duration:5s}
+body.playing .panel::before{filter:drop-shadow(0 0 6px #f972df)}
+@keyframes borderflow{to{background-position:300% 0}}
+@keyframes glint{0%,70%,100%{transform:translateX(-70%) rotate(4deg);opacity:0}78%{opacity:.32}91%{transform:translateX(65%) rotate(4deg);opacity:0}}
+@keyframes impact{0%,60%,100%{opacity:.10;transform:translate(-50%,-50%) scale(.6)}70%{opacity:.9;transform:translate(-50%,-50%) scale(1.2)}78%{opacity:.10;transform:translate(-50%,-50%) scale(1.5)}}
+@keyframes flower{0%,100%{opacity:.3;transform:translate(-50%,-50%) scale(.8)}50%{opacity:.85;transform:translate(-50%,-50%) scale(1.2)}}
+@keyframes rune{0%,100%{opacity:.35}50%{opacity:1}}
+/* The same art is always above the controls: no cropped buttons on phones. */
+@media(max-width:610px){body{padding:5px}.aura{border-radius:12px}.shell{border-radius:11px}.panel{display:flex;flex-direction:column;align-items:stretch;padding:12px 14px 14px;gap:12px}.heading{text-align:center}.kicker{font-size:8px}.track{font-size:10px}.controls{justify-content:center}.ctrl{width:42px;height:42px}.ctrl.primary{width:52px;height:52px}.progress{gap:8px}.time{min-width:29px;font-size:10px}.foot{justify-content:center}.vol{display:none}.status{text-align:center;font-size:9px}h1{font-size:clamp(14px,4.5vw,19px)} }
+@media(max-width:350px){.panel{padding:11px 10px;gap:10px}h1{letter-spacing:.04em}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<!-- Google Sites : cadre conseille de 330 a 360px de haut pour afficher la version PC ET mobile sans couper les commandes. -->
-<main class="player" aria-label="Lecteur audio La Reine des Cendres">
-  <section class="art" aria-label="Duel Eiko et Aren, drapeaux Obsidia et ROXOR">
-    <img src="duel-obsidia-v3.webp" alt="Eiko et Aren se battent, sous les drapeaux d'Obsidia et de ROXOR">
-    <div class="glow" aria-hidden="true"></div><div class="ring" aria-hidden="true"></div>
-    <canvas id="sparks" aria-hidden="true"></canvas>
-  </section>
-  <section class="interface">
-    <div class="heading"><div class="title-wrap"><h1>LA REINE DES CENDRES</h1><div class="subtitle">Nothing to me...</div></div></div>
-    <div class="transport">
-      <button id="restart" class="button" title="Recommencer" aria-label="Recommencer">⏮</button>
-      <button id="play" class="button play" title="Lecture" aria-label="Lecture">▶</button>
-      <button id="loop" class="button on" title="Boucle activée" aria-label="Boucle activée" aria-pressed="true">↻</button>
+<main aria-label="Lecteur audio La Reine des Cendres">
+  <div class="aura" aria-hidden="true"></div>
+  <div class="shell">
+    <div class="art" aria-label="Duel d'Eiko et Aren, Obsidia et ROXOR">
+      <img src="obsidia-duel-final.webp" alt="Eiko et Aren croisent leurs armes sous les emblèmes d’Obsidia et de ROXOR, la fleur de cristal bleu au centre" fetchpriority="high">
+      <div class="impact" aria-hidden="true"></div>
+      <div class="flower" aria-hidden="true"></div>
+      <div class="rune" aria-hidden="true"></div>
+      <canvas id="particles" class="sparks" aria-hidden="true"></canvas>
     </div>
-    <div class="progress"><span id="elapsed" class="time">0:00</span><input id="seek" type="range" min="0" max="1000" value="0" aria-label="Avancement dans la musique"><span id="duration" class="time">0:00</span></div>
-    <div class="footer"><label class="volume">🔊 <input id="volume" type="range" min="0" max="100" value="80" aria-label="Volume"></label><div id="status" class="status" role="status">BOUCLE ACTIVE</div></div>
-  </section>
-  <audio id="audio" preload="metadata" loop src="episode2.mp3.mp3"></audio>
+    <section class="panel" aria-label="Commandes musicales">
+      <div class="heading"><div class="kicker">Obsidia · Bande originale</div><h1>LA REINE DES CENDRES</h1><div class="track">Nothing to me...</div></div>
+      <div class="controls">
+        <button type="button" class="ctrl" id="restart" aria-label="Recommencer le morceau" title="Recommencer"><svg viewBox="0 0 24 24"><path d="M19 20V4M16 5 6 12l10 7V5Z"/></svg></button>
+        <button type="button" class="ctrl primary" id="play" aria-label="Lire la musique" title="Lecture"><svg id="playIcon" viewBox="0 0 24 24"><path d="M8 4.5 20 12 8 19.5Z"/></svg></button>
+        <button type="button" class="ctrl is-on" id="loop" aria-label="Désactiver la boucle" aria-pressed="true" title="Boucle activée"><svg viewBox="0 0 24 24"><path d="m17 2 4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4m14-1v2a3 3 0 0 1-3 3H3"/></svg></button>
+      </div>
+      <div class="progress"><span class="time" id="elapsed">0:00</span><input id="seek" aria-label="Position dans la musique" type="range" min="0" max="1000" step="1" value="0"><span id="duration" class="time">0:00</span></div>
+      <div class="foot"><label class="vol"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5Zm4 4a5 5 0 0 1 0 6m3-9a9 9 0 0 1 0 12"/></svg><input aria-label="Volume sonore" type="range" id="volume" min="0" max="100" value="80"></label><div class="status" id="status" role="status" aria-live="polite">PRÊT À ÉCOUTER · BOUCLE ACTIVE</div></div>
+    </section>
+    <audio id="audio" preload="metadata" loop src="episode2.mp3.mp3"></audio>
+  </div>
 </main>
 <script>
 (()=>{
- const $=id=>document.getElementById(id),audio=$('audio'),play=$('play'),loop=$('loop'),seek=$('seek'),vol=$('volume'),status=$('status');
- audio.loop=true;audio.volume=.8;
- const format=n=>Number.isFinite(n)?`${Math.floor(n/60)}:${String(Math.floor(n%60)).padStart(2,'0')}`:'0:00';
- function update(){ $('elapsed').textContent=format(audio.currentTime);$('duration').textContent=format(audio.duration);if(document.activeElement!==seek)seek.value=Number.isFinite(audio.duration)&&audio.duration>0?Math.round(audio.currentTime/audio.duration*1000):0; }
- function sync(){let p=!audio.paused;play.textContent=p?'Ⅱ':'▶';play.title=p?'Pause':'Lecture';play.setAttribute('aria-label',play.title);status.textContent=(p?'EN LECTURE':'PRÊT')+' · '+(audio.loop?'BOUCLE ACTIVE':'BOUCLE DÉSACTIVÉE');}
- play.onclick=async()=>{if(audio.paused){try{await audio.play()}catch(e){status.textContent='LECTURE IMPOSSIBLE : VÉRIFIER LE MP3';}}else audio.pause();sync()};
- $('restart').onclick=()=>{audio.currentTime=0;update()};
- loop.onclick=()=>{audio.loop=!audio.loop;loop.classList.toggle('on',audio.loop);loop.setAttribute('aria-pressed',String(audio.loop));loop.setAttribute('aria-label',audio.loop?'Boucle activée':'Boucle désactivée');loop.title=audio.loop?'Boucle activée':'Boucle désactivée';sync()};
- vol.oninput=()=>audio.volume=Number(vol.value)/100;
- seek.oninput=()=>{if(Number.isFinite(audio.duration)&&audio.duration>0)audio.currentTime=Number(seek.value)/1000*audio.duration;update()};
- for(const ev of ['timeupdate','loadedmetadata','durationchange','seeked'])audio.addEventListener(ev,update);
- for(const ev of ['play','pause','ended'])audio.addEventListener(ev,sync);
- audio.addEventListener('error',()=>status.textContent='MP3 INTROUVABLE');sync();update();
- // Sparks on image only. No flashing or resizing of the full embedded player.
- const canvas=$('sparks'),ctx=canvas.getContext('2d');if(!ctx||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
- let w=0,h=0,particles=[],last=0,nextBurst=0;
- function size(){const r=canvas.getBoundingClientRect(),d=Math.min(window.devicePixelRatio||1,2);w=r.width;h=r.height;canvas.width=Math.round(w*d);canvas.height=Math.round(h*d);ctx.setTransform(d,0,0,d,0,0)}
- function add(burst){const a=Math.random()*Math.PI*2,s=burst?35+Math.random()*105:2+Math.random()*13;particles.push({x:burst?w*.5:Math.random()*w,y:burst?h*.48:Math.random()*h,vx:Math.cos(a)*s,vy:Math.sin(a)*s-(burst?0:8),life:burst?.3+Math.random()*.8:1+Math.random()*3,age:0,r:burst?1+Math.random()*1.6:.6+Math.random(),color:Math.random()<.5?'255,170,235':'133,213,255'});if(particles.length>110)particles.shift()}
- function draw(t){const dt=Math.min((t-last)/1000||.016,.045);last=t;ctx.clearRect(0,0,w,h);if(Math.random()<.5)add(false);if(t>nextBurst){nextBurst=t+4700;for(let i=0;i<27;i++)add(true)}for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.age+=dt;if(p.age>=p.life){particles.splice(i,1);continue}p.x+=p.vx*dt;p.y+=p.vy*dt;if(p.life<1.2)p.vy+=90*dt;const alpha=(1-p.age/p.life)*.9;ctx.fillStyle=`rgba(${p.color},${alpha})`;ctx.shadowColor=`rgba(${p.color},${alpha})`;ctx.shadowBlur=6;ctx.fillRect(p.x,p.y,p.r,p.r*1.8)}ctx.shadowBlur=0;requestAnimationFrame(draw)}
- size();window.addEventListener('resize',size);requestAnimationFrame(draw);
+'use strict';
+const $=id=>document.getElementById(id), audio=$('audio'), play=$('play'), loop=$('loop'),seek=$('seek'),volume=$('volume'),status=$('status');
+audio.loop=true;audio.volume=.8;
+const fmt=n=>Number.isFinite(n)?`${Math.floor(n/60)}:${String(Math.floor(n%60)).padStart(2,'0')}`:'0:00';
+function progress(){ $('elapsed').textContent=fmt(audio.currentTime);$('duration').textContent=fmt(audio.duration);if(!seek.matches(':active'))seek.value=Number.isFinite(audio.duration)&&audio.duration>0?Math.round(audio.currentTime/audio.duration*1000):0;seek.style.setProperty('--percent',`${Number(seek.value)/10}%`); }
+function sync(){const active=!audio.paused;document.body.classList.toggle('playing',active);$('playIcon').innerHTML=active?'<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>':'<path d="M8 4.5 20 12 8 19.5Z"/>';play.title=active?'Pause':'Lecture';play.setAttribute('aria-label',active?'Mettre en pause':'Lire la musique');status.textContent=`${active?'EN LECTURE':'PRÊT À ÉCOUTER'} · ${audio.loop?'BOUCLE ACTIVE':'BOUCLE DÉSACTIVÉE'}`;}
+play.addEventListener('click',async()=>{if(audio.paused){try{await audio.play()}catch(e){status.textContent='LECTURE IMPOSSIBLE — VÉRIFIER LE MP3';}}else{audio.pause();}sync()});
+$('restart').addEventListener('click',()=>{audio.currentTime=0;progress()});
+loop.addEventListener('click',()=>{audio.loop=!audio.loop;loop.classList.toggle('is-on',audio.loop);loop.setAttribute('aria-pressed',String(audio.loop));loop.setAttribute('aria-label',audio.loop?'Désactiver la boucle':'Activer la boucle');loop.title=audio.loop?'Boucle activée':'Boucle désactivée';sync()});
+seek.addEventListener('input',()=>{if(Number.isFinite(audio.duration)&&audio.duration>0)audio.currentTime=Number(seek.value)/1000*audio.duration;seek.style.setProperty('--percent',`${Number(seek.value)/10}%`);progress()});
+volume.addEventListener('input',()=>{audio.volume=Number(volume.value)/100;volume.style.setProperty('--percent',`${volume.value}%`)});
+volume.style.setProperty('--percent','80%');
+for(const event of ['timeupdate','durationchange','loadedmetadata','seeked'])audio.addEventListener(event,progress);
+for(const event of ['play','pause','ended'])audio.addEventListener(event,sync);
+audio.addEventListener('error',()=>{status.textContent='MUSIQUE INTROUVABLE — VÉRIFIER episode2.mp3.mp3'});
+progress();sync();
+// Tiny independently moving embers and energy sparks; original illustration remains unchanged.
+const canvas=$('particles');if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+const ctx=canvas.getContext('2d');if(!ctx)return;
+let w=0,h=0,items=[],last=0,next=0,visible=true;
+const resize=()=>{const b=canvas.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);w=b.width;h=b.height;canvas.width=Math.round(w*d);canvas.height=Math.round(h*d);ctx.setTransform(d,0,0,d,0,0)};
+const add=burst=>{const a=Math.random()*Math.PI*2,v=burst?(20+Math.random()*72):(4+Math.random()*13);items.push({x:burst?w*.53:Math.random()*w,y:burst?h*.38:Math.random()*h,vx:Math.cos(a)*v,vy:Math.sin(a)*v-(burst?0:8),age:0,life:burst?.28+Math.random()*.8:1+Math.random()*2,rad:burst?.8+Math.random()*1.3:.4+Math.random()*.8,color:Math.random()>.45?'255,133,207':'113,218,255'});if(items.length>100)items.shift()};
+function frame(t){if(!visible){requestAnimationFrame(frame);return}const dt=Math.min((t-last)/1000||.016,.04);last=t;ctx.clearRect(0,0,w,h);if(Math.random()<.35)add(false);if(t>next){next=t+5400;for(let i=0;i<22;i++)add(true)}for(let i=items.length-1;i>=0;i--){const p=items[i];p.age+=dt;if(p.age>=p.life){items.splice(i,1);continue}p.x+=p.vx*dt;p.y+=p.vy*dt;if(p.life<1.2)p.vy+=45*dt;const opacity=(1-p.age/p.life)*.85;ctx.fillStyle=`rgba(${p.color},${opacity})`;ctx.shadowColor=`rgba(${p.color},${opacity})`;ctx.shadowBlur=6;ctx.fillRect(p.x,p.y,p.rad,p.rad*1.5)}ctx.shadowBlur=0;requestAnimationFrame(frame)}
+resize();window.addEventListener('resize',resize);document.addEventListener('visibilitychange',()=>{visible=!document.hidden;last=0});requestAnimationFrame(frame);
 })();
 </script>
 </body>
